@@ -1,0 +1,13 @@
+<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="nav" md-is-locked-open="true"
+            ng-style="ctrl.getWidth()">
+    <md-content layout="column" role="navigation">
+        <ul class="side-menu">
+            <li ng-repeat="item in ctrl.menuItems" class="parent-list-item">
+                <div layout="row" layout-align="start center">
+                    <menu-toggle section="item" ng-if="item.type === 'toggle'"></menu-toggle>
+                    <menu-link section="item" ng-if="item.type === 'link'"></menu-link>
+                </div>
+            </li>
+        </ul>
+    </md-content>
+</md-sidenav>

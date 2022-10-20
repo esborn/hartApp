@@ -1,0 +1,5 @@
+
+{
+    "apiRequest": "_api",
+    "renewRequestDigest": "/_api/contextinfo"
+}

@@ -1,0 +1,5 @@
+{
+  "getItemCount": "/_api/Lists/getByTitle('Regions')/ItemCount",
+  "getAll": "/_api/Lists/getByTitle('Regions')/items?$top={ITEM_COUNT}&$orderby=Title asc&$select=Region,EmailAddress"
+}
+

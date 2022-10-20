@@ -1,0 +1,1 @@
+"reducted This deploys Sharepoint schema to production using octopus delopy"

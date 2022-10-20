@@ -1,0 +1,5 @@
+{
+    "uploadAttachment": "/_api/Lists/getByTitle('{LIST_NAME}')/items('{ID}')/AttachmentFiles/add(FileName='{FILE_NAME}')",
+    "getItemAttachmentsNames": "/_api/Lists/getByTitle('{LIST_NAME}')/items('{ID}')/AttachmentFiles",
+    "deleteItemAttachment": "/_api/Lists/getByTitle('{LIST_NAME}')/items('{ID}')/AttachmentFiles/getByFileName('{FILE_NAME}')"
+}

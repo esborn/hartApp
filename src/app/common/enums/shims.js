@@ -1,0 +1,1 @@
+function IsNode(e,t){return e.nodeName.toUpperCase()==t.toUpperCase()}window.onload=function(){var e=document.getElementsByTagName("base");if(e){var t=(e[0],e[0].parentElement);if(!IsNode(t,"head"))for(t.setAttribute("layout","column");t&&!IsNode(t,"html")&&"s4-bodyContainer"!=t.getAttribute("id");)t.style.height="100%",t=t.parentElement}};

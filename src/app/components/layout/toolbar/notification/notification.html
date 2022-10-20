@@ -1,0 +1,19 @@
+<md-menu-bar>
+    <md-menu md-position-mode="target-right target" md-offset="0 62">
+        <md-button class="md-ink-ripple" ng-click="ctrl.showNotificationsMenu($mdOpenMenu, $event)">
+            <div class="notificationsNumber notificationsOverlay" ng-hide="ctrl.IsNotificationNumberHidden">
+                <div>{{ctrl.NotificationsNumber}}</div>
+            </div>
+            <i class="material-icons md-36 md-light">notifications</i>
+        </md-button>
+
+        <md-menu-content ng-style="{background: 'white'}">
+            <md-menu-item ng-repeat="notification in ctrl.Notifications" ng-click="ctrl.sampleAction('share', $event)" 
+                layout="column" layout-align="space-between start" class="notificationsMenuItem">
+                    <div>{{notification.Name}}</div>
+                    <div>{{notification.Content}}</div>
+                    <div>{{notification.Requester}}</div>
+            </md-menu-item>
+        </md-menu-content>
+    </md-menu>
+</md-menu-bar>

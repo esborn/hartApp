@@ -1,0 +1,6 @@
+{
+  "values": ["YES", "NO", "EMPTY_ANSWER"],
+  "yes": "YES",
+  "no": "NO",
+  "empty": "EMPTY_ANSWER"
+}

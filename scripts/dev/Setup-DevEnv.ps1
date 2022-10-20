@@ -1,0 +1,1 @@
+"reducted This sets up the sharepoint dev site for this app using powershell"

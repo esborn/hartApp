@@ -1,0 +1,17 @@
+<md-progress-linear md-mode="indeterminate" ng-show="ctrl.showProgress"></md-progress-linear>
+<div id="container" layout-gt-sm="column" layout-align="start start" layout-padding>
+    <div layout-gt-xs="row" layout-align="start center">
+        <md-button class="md-fab md-primary" id="selectFiles">
+            <i class="material-icons">file_upload</i>
+        </md-button>
+        <div class="hint">Upload File</div>
+    </div>
+    <div id="previews" layout="row">
+    </div>
+
+</div>
+<div class="errors">
+    <div id="duplicateError" class="customError hide">Attachment already exists</div>
+    <div id="isEmptyError" class="customError hide">File empty</div>
+    <div id="maxFilesError" class="customError hide">Max number of files reached</div>
+</div>

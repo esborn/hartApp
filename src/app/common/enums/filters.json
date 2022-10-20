@@ -1,0 +1,33 @@
+{
+  "dateOperators": [
+    {
+      "value": "gt",
+      "displayText": ">"
+    },
+    {
+      "value": "lt",
+      "displayText": "<"
+    },
+    {
+      "value": "eq",
+      "displayText": "="
+    },
+    {
+      "value": "ge",
+      "displayText": ">="
+    },
+    {
+      "value": "le",
+      "displayText": "<="
+    }],
+
+  "eq": "eq",
+  "ge": "ge",
+  "gt": "gt",
+  "le": "le",
+  "lt": "lt",
+
+  "logicalOperators": ["and", "or"],
+  "and": "and",
+  "or": "or"
+}

@@ -1,0 +1,38 @@
+<div layout-gt-sm="row" layout-align="space-between center" layout-padding>
+    <div layout="row" layout-align="start center">
+        <md-button class="md-icon-button md-raised md-primary" ng-if="ctrl.options.addAction"
+                   ng-link="['{{ctrl.options.addAction}}']">
+            <i class="material-icons md-icon-30">add_circle_outline</i>
+        </md-button>
+        <md-button class="md-icon-button md-raised md-primary" aria-label="ShowAll"
+                   ng-click="ctrl.triggerShowAll()"
+                   ng-hide="ctrl.isShowAllHidden">
+            <i class="material-icons md-icon-30">view_column</i>
+        </md-button>
+        <h3 class="md-title">{{ctrl.options.title}}</h3>
+    </div>
+</div>
+
+<div layout="column" class="gridView" layout-padding ng-style="ctrl.overflowContent">
+    <div ng-style="ctrl.minWidthContent">
+        <md-toolbar layout="row" layout-align="space-between center" ng-if="ctrl.isDeleteToolbarVisible">
+            <span layout-margin>{{ctrl.selectedNumber}} items selected</span>
+            <md-button class="md-icon-button" ng-click="ctrl.deleteSelected()" ng-show="!ctrl.isDeleteProcessing">
+                <i class="material-icons md-icon-30">delete_sweep</i>
+            </md-button>
+            <md-progress-circular class="md-primary md-hue-3"
+                                  md-mode="indeterminate"
+                                  ng-show="ctrl.isDeleteProcessing"
+                                  md-diameter="70"></md-progress-circular>
+        </md-toolbar>
+        <div ui-grid="ctrl.options"
+             ui-grid-pagination
+             ui-grid-auto-resize
+             ui-grid-selection
+             ng-style="ctrl.getHeight()"
+             ng-if="ctrl.options.isGridReady && ctrl.options.data.length > 0"></div>
+        <div class="grid-messages" ng-if="!ctrl.options.isGridReady || ctrl.options.data.length == 0">
+            No reports
+        </div>
+    </div>
+</div>

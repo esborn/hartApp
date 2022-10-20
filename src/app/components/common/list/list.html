@@ -1,0 +1,48 @@
+<div layout="row" layout-align="space-between">
+    <md-button class="md-icon-button md-raised md-primary" aria-label="Add"
+               ng-if="!ctrl.options.readOnly && !ctrl.options.addIconText"
+               ng-click="ctrl.onItemClick(null, $event)">
+        <i class="material-icons md-icon-30">{{ctrl.options.addIconClass}}</i>
+    </md-button>
+    <md-button aria-label="Add"
+               class="md-raised md-primary"
+               ng-if="!ctrl.options.readOnly && ctrl.options.addIconText"
+               ng-click="ctrl.onItemClick(null, $event)">
+        <i class="material-icons md-icon-30">{{ctrl.options.addIconClass}}</i>
+        <span>{{ctrl.options.addIconText }}</span>
+    </md-button>
+
+    <md-button class="md-icon-button md-raised md-primary" aria-label="ShowAll"
+               ng-click="ctrl.triggerShowAll()"
+               ng-hide="ctrl.isShowAllHidden || ctrl.model.length == 0">
+        <i class="material-icons md-icon-30">view_column</i>
+    </md-button>
+</div>
+<md-list ng-class="ctrl.listOverflow">
+    <md-list-item class="header-list-item" ng-style="ctrl.listItemMinWidth"
+                  ng-if="ctrl.options.showHeader && ctrl.model.length > 0">
+        <p ng-repeat="displayField in ctrl.options.displayFields"
+           ng-show="ctrl.isVisible(displayField)"
+           ng-class="ctrl.listItemOverflow">
+            {{displayField.header }}
+        </p>
+        <div class="header-button-placeholder" ng-if="ctrl.options.isDeleteEnabled"></div>
+    </md-list-item>
+    <md-list-item ng-repeat="item in ctrl.model | orderBy : 'ctrl.options.orderBy'"
+                  class="secondary-button-padding"
+                  aria-label="Edit"
+                  ng-style="ctrl.listItemMinWidth"
+                  ng-click="ctrl.onItemClick(item, $event)">
+        <p ng-repeat="displayField in ctrl.options.displayFields"
+           ng-show="ctrl.isVisible(displayField)"
+           ng-class="ctrl.listItemOverflow">
+            {{ctrl.displayProperty(item, displayField)}}
+        </p>
+        <md-button class="md-icon-button"
+                aria-label="Delete" 
+                ng-click="ctrl.onItemRemove(item)"
+                ng-if="ctrl.options.isDeleteEnabled">
+            <i class="material-icons md-icon-30">delete_forever</i>
+        </md-button>
+    </md-list-item>
+</md-list>

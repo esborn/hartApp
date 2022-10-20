@@ -1,0 +1,16 @@
+{
+  "loading": "loading",
+  "deleteGridEvent": "deleteGridEvent",
+  "filterGridEvent": "filterGridEvent",
+  "gridSelectedRows": "gridSelectedRows",
+  "listModelBeforeChange": "listModelBeforeChange",
+  "listModelAfterChange": "listModelAfterChange",
+  "peoplePickerChange": "peoplePickerChange",
+  "initCommonTarFeatures": "initCommonTarFeatures",
+  "initCommonEifFeatures": "initCommonEifFeatures",
+  "approvalDetailsLoaded": "approvalDetailsLoaded",
+  "initCommonTarDetails": "initCommonTarDetails",
+  "initCommonEifDetails": "initCommonEifDetails",
+  "hideQuestion": "hideQuestion",
+  "toggleAccordion": "toggleAccordion"
+}

@@ -1,0 +1,21 @@
+<div ng-if="!ctrl.fileModels.length">
+    No attachments uploaded.
+</div>
+<md-list>
+    <md-list-item ng-repeat="file in ctrl.fileModels | orderBy: 'file.fileName'" 
+                class="secondary-button-padding" 
+                aria-label="Download">
+        <p>{{file.fileName}}</p>
+        <md-button class="md-icon-button" 
+                    aria-label="Download" 
+                    ng-click="ctrl.downloadFile(file)">
+            <i class="material-icons md-icon-30">file_download</i>
+        </md-button>
+        <md-button class="md-icon-button"
+                   aria-label="Delete"
+                   ng-click="ctrl.deleteFile(file)"
+                   ng-if="!ctrl.options.readOnly">
+            <i class="material-icons md-icon-30">delete_forever</i>
+        </md-button>
+    </md-list-item>
+</md-list>

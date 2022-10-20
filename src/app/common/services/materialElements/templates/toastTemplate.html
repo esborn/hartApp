@@ -1,0 +1,12 @@
+<md-toast>
+    <div class="md-toast-content" layout="row" layout-align="end center">
+        <md-button class="md-icon-button" ng-click="ctrl.toast.hide()">
+            <i class="material-icons">close</i>
+        </md-button>
+    </div>
+    <div class="md-toast-content" layout="column">
+        <div ng-repeat="msg in ctrl.messages">
+            {{msg}}
+        </div>
+    </div>
+</md-toast>

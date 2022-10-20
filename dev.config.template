@@ -1,0 +1,5 @@
+// Save this file as dev.config.json updating parameters as necessary 
+{    
+    "SPAdminUrl":  "https://[tenantname]-admin.sharepoint.com",
+    "SiteUrl":  "https://[tenantname].sharepoint.com/sites/hart-dev-[devuser]"
+}

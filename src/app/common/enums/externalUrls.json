@@ -1,0 +1,11 @@
+{
+  "securityWarning": "https://onenet.savethechildren.net/sci/security/Pages/How%20to%20access%20SC%20PSS%20e-course.aspx",
+  "medicalCardWarning" : "https://onenet.savethechildren.net/tools/QualityFramework/QFDocuments/Forms/HRProcedures.aspx",
+  "photoIdWarning": "",
+  "travelProcedures": "https://onenet.savethechildren.net/sci/security/Lists/Announcements/DispForm.aspx?ID=37",
+  "preDepartureProcedures": "https://onenet.savethechildren.net/sci/security/Lists/pre_departure/AllItems.aspx",
+  "departureShareProcedures": "https://onenet.savethechildren.net/sci/security/Lists/pre_departure/AllItems.aspx",
+  "safeGuardPolicyProcedures": "",
+  "travelPolicyProcedures": "https://onenet.savethechildren.net/sci/security/SCDocuments/SCI%20travel%20procedure%20Mar%202013%20FINAL.pdf",
+  "saveTheChildren": "https://onenet.savethechildren.net/Pages/default.aspx"
+}

@@ -1,0 +1,9 @@
+<md-content class="panel">
+    <md-button layout-fill layout="row" class="panel-heading" ng-click="ctrl.toggleContent()" ng-style="ctrl.getButtonStyle()">
+        <div layout="row" layout-align="space-between center" flex="100">
+            <span>{{ctrl.heading}}</span>
+            <i class="material-icons md-24 icon" ng-class="ctrl.getToggleClass()">keyboard_arrow_left</i>
+        </div>
+    </md-button>
+    <div class="panel-content" ng-show="ctrl.isContentVisible" ng-transclude></div>
+</md-content>

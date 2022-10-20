@@ -1,0 +1,12 @@
+<div layout-gt-xs="row" layout-align="start center">
+    <md-input-container class="md-block" flex-gt-sm="50" >
+        <label>Date operator</label>
+        <md-select ng-model="ctrl.model.operator" placeholder="Date operator">
+            <md-option ng-repeat="item in ctrl.dateOperators" ng-value="item.value">
+                {{item.displayText}}
+            </md-option>
+        </md-select>
+    </md-input-container>
+    <md-datepicker ng-model="ctrl.model.value" md-placeholder="{{ctrl.label}}">
+    </md-datepicker>
+</div>

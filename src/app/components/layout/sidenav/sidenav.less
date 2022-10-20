@@ -1,0 +1,94 @@
+h2{
+	padding-left:5px;
+}
+
+.fill-height{
+  display: flex;
+  flex: 1;
+  min-height: 100%;
+}
+
+.fill-height > div{
+  min-height: 100%;
+  display: flex;
+}
+
+md-sidenav {
+  overflow: visible;
+
+}
+.side-menu, .side-menu ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 0;
+}
+
+.side-menu .menu-toggle-list a.md-button {
+  display: block;
+  padding: 0 16px 0 32px;
+  text-transform: none;
+  font-weight: 500;
+}
+
+.side-menu .menu-toggle-list .md-button {
+  display: block;
+  padding: 0 16px 0 32px;
+  text-transform: none;
+}
+
+.side-menu > li {
+  height: inherit;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.toggle {
+  transform: rotateZ(90deg);
+  -webkit-transform: rotateZ(90deg);
+  -ms-transform: rotateZ(90deg);
+  -moz-transform: rotate(90deg);
+}
+
+.notoggle {
+  transform: rotateZ(270eg);
+  -webkit-transform: rotateZ(270deg);
+  -ms-transform: rotateZ(270deg);
+  -moz-transform: rotate(270deg);
+}
+
+.side-menu .md-button-toggle .md-toggle-icon {
+  background-size: 100% auto;
+  display: inline-block;
+  margin: auto 0 auto auto;
+  width: 15px;
+  color: darkgray;
+  transition: transform .3s ease-in-out;
+  -webkit-transition: -webkit-transform .3s ease-in-out;
+}
+
+.menu-toggle-list.ng-hide {
+  max-height: 0;
+}
+
+.side-menu .md-button {
+  border-radius: 0;
+  cursor: pointer;
+  font-weight: 400;
+  line-height: 40px;
+  margin: 0;
+  max-height: 40px;
+  overflow: hidden;
+  padding: 0px 16px;
+  text-align: left;
+  text-decoration: none;
+  white-space: normal;
+  width: 100%;
+  min-width: 0px;
+}
+
+.menu-toggle-list {
+  background: #fff;
+  max-height: 1300px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}

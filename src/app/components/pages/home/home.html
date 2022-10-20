@@ -1,0 +1,23 @@
+<md-content>
+    <div class="col-md-12">
+        <div class="md-no-sticky md-subheader _md md-pageTheme-theme">
+            <div class="md-subheader-inner">
+                <div class="md-subheader-content" layout-gt-md="row">
+                    <h1>Humanitarian Analysis and Reporting Tool
+                        <md-button aria-label="Create new response" ng-hide="!ctrl.isAdmin()" class="md-primary md-raised md-mini" style="float: right; margin-top: -15px"
+                            ng-link="['Response']">
+                            <span>Create new response</span>
+                        </md-button>
+                    </h1>
+
+                </div>
+            </div>
+        </div>
+        <div ng-if="!ctrl.isAdmin()">
+            <grid options="ctrl.responseCodeOptions"></grid>
+        </div>
+        <div ng-if="ctrl.isAdmin()">
+            <grid options="ctrl.responseCodeAdminOptions"></grid>
+        </div>
+    </div>
+</md-content>

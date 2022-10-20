@@ -1,0 +1,46 @@
+accordion{
+    .panel{
+        border-radius: 4px;
+        margin: 10px 10px 10px 10px;
+        border: 1px solid transparent;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+        overflow: hidden;
+    }
+    
+    .panel-heading{
+        padding: 15px;
+        text-align: left;
+        background-color: rgba(158, 158, 158, 0.2);
+    }
+    
+    .panel-content{
+        padding: 15px;
+    }
+    
+    .panel-content {
+        transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+        width: 100%;
+        opacity: 1;
+    }
+
+    .ng-hide {
+        background-color: transparent;
+        opacity: 0;
+    }
+    
+    .ng-show{
+        opacity: 1;
+    }
+    
+    .toggle {
+        transform: rotateZ(90deg);
+        -webkit-transform: rotateZ(90deg);
+        -ms-transform: rotateZ(90deg);
+    }
+
+    .notoggle {
+        transform: rotateZ(270deg);
+        -webkit-transform: rotateZ(270deg);
+        -ms-transform: rotateZ(270deg);
+    }
+}

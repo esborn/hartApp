@@ -1,0 +1,19 @@
+<div has-permissions="ctrl.section.permissions">
+    <md-content layout="row">
+        <md-button ng-click="ctrl.toggle(ctrl.section)"
+                   aria-controls="side-menu-{{ctrl.section.name}}" layout="row">
+            <i class="material-icons md-light" ng-if="ctrl.section.icon">
+                {{ctrl.section.icon}}
+            </i>
+            <span ng-hide="ctrl.isMenuClosed()">
+                {{ctrl.section.name }}
+                <i class="material-icons md-24 md-light icon tabs-arrows" ng-class="ctrl.getToggleIconClass(ctrl.section)">keyboard_arrow_left</i>
+            </span>
+        </md-button>
+    </md-content>
+    <ul ng-show="ctrl.isOpen(ctrl.section)" id="side-menu-{{ctrl.section.name}}" class="menu-toggle-list">
+        <li ng-repeat="page in ctrl.section.pages">
+            <menu-link section="page" has-permissions="page.permissions"></menu-link>
+        </li>
+    </ul>
+</div>

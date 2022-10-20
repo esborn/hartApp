@@ -1,0 +1,6 @@
+{
+  "getAllResponses": "/_api/Lists/getByTitle('Response Codes')/items?$top=5000",
+  "getResponse": "/_api/Lists/getByTitle('{LIST_NAME}')/items?$filter=ID eq {ID}",
+  "addResponse": "/_api/Lists/getByTitle('Response Codes')/items?$top=5000",
+  "updateResponse": "/_api/Lists/getByTitle('Response Codes')/items({ID})"
+}

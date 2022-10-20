@@ -1,0 +1,4 @@
+{
+  "getItemCount": "/_api/Lists/getByTitle('Countries')/ItemCount",
+  "getAll": "/_api/Lists/getByTitle('Countries')/items?$top={ITEM_COUNT}&$orderby=Title"
+}

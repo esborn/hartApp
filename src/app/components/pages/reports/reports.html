@@ -1,0 +1,17 @@
+<md-content>
+    <div class="col-md-12">
+        <div class="md-no-sticky md-subheader _md md-pageTheme-theme">
+            <div class="md-subheader-inner">
+                <div class="md-subheader-content">
+                    <h1>{{ctrl.reportOptions.code}} - {{ctrl.reportOptions.responseStatus}} - {{ctrl.reportOptions.country}} - {{ctrl.reportOptions.region}}</h1>
+                    <h3>{{ctrl.reportOptions.description}}                        
+                            <md-button ng-if="ctrl.canAddReport && ctrl.reportOptions.data.length == 0" aria-label="Add report" class="md-primary md-raised md-mini" style="float:right; margin-top: -10px" ng-click="ctrl.createReport(ctrl.reportOptions.responseId)">
+                                    <span>Add report</span>
+                                </md-button>
+                    </h3> 
+                </div>               
+            </div>  
+        </div>
+        <grid options="ctrl.reportOptions"></grid>
+    </div>
+</md-content>

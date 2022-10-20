@@ -1,0 +1,173 @@
+<md-content ng-cloak class="md-inline-form">
+    <ng-form name="form" novalidate>
+        <div layout-gt-sm="row" layout-align="space-between center">
+            <h2>{{ctrl.title}} {{ctrl.responseID}}</h2>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <md-input-container class="md-block" flex-gt-sm="50">
+                <label>Country</label>
+                <md-select ng-model="ctrl.model.country" placeholder="Country">
+                    <md-option ng-repeat="item in ctrl.countries" ng-value="item.title">
+                        {{item.title}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm="50">
+                <label>Regions</label>
+                <md-select ng-model="ctrl.model.region" name="regional" aria-label="dest" placeholder="Regions"
+                    ng-model-options="{trackBy: '$value.region'}" md-on-open="ctrl.loadRegions()" required>
+                    <md-option ng-repeat="item in ctrl.regions" ng-value="item">
+                        {{item.region}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+
+        <div layout-gt-md="row" layout-padding>
+            <md-input-container class="md-block" flex-gt-sm="50">
+                <label>Code</label>
+                <input required name="code" ng-model="ctrl.model.code"> </input>
+
+
+                <div ng-messages="createForm.code.$error">
+                    <div ng-message="required">Please enter a code</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm="50">
+                <label>Description</label>
+                <input required name="description" ng-model="ctrl.model.responseDescription">
+                <div ng-messages="createForm.description.$error">
+                    <div ng-message="required">Please enter a description</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <md-input-container class="md-block" flex-gt-sm="50">
+                <label>Response status</label>
+                <md-select ng-model="ctrl.model.responseStatus" placeholder="Response status">
+                    <md-option ng-repeat="item in ctrl.responseStatus" ng-value="item">
+                        {{item}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm="50">
+                <label>Category</label>
+
+                <md-select ng-model="ctrl.model.responseCategory" name="category" placeholder="Category">
+
+                    <md-option ng-repeat="item in ctrl.responseCategory" ng-value="item">
+                        {{item}}
+                    </md-option>
+                </md-select>
+
+
+                <div ng-messages="form.responseCategory.$error">
+                    <div ng-message="required">This is required</div>
+
+                </div>
+            </md-input-container>
+        </div>
+
+        <div layout-gt-md="row" layout-padding>
+            <md-input-container class="md-block" flex-gt-sm="50">
+                <div layout="row" layout-padding layout-margin>
+                    <md-input-container layout-margin class="md-block" flex>
+                        <label>Finance Director</label>
+                        <input type="text" ng-model="ctrl.model.region.emailAddress" name="notifyDirector" disabled>
+                    </md-input-container>
+                </div>
+            </md-input-container>
+        </div>
+
+
+        <div layout-gt-md="row" layout-padding>
+            <div class="md-block" flex-gt-sm="33">
+                <h5 style="font-weight: normal !important">Response start date</h5>
+                <md-datepicker ng-model="ctrl.model.startDate" md-placeholder="Enter date" md-open-on-focus>
+                </md-datepicker>
+            </div>
+
+            <div class="md-block" flex-gt-sm="33">
+                <h5 style="font-weight: normal !important">SoD Category End Date</h5>
+                <md-datepicker ng-model="ctrl.model.soDEndDate" ng-change="ctrl.updateSodDays(form)"
+                    md-min-date="ctrl.minDate" md-max-date="ctrl.maxDate"
+                    ng-disabled="ctrl.model.soDCategory == '' || ctrl.model.soDCategory== 'BAU' || ctrl.model.soDCategory== null"
+                    md-placeholder="SoD Category End Date" md-open-on-focus></md-datepicker>
+            </div>
+
+            <md-input-container class="md-block" flex-gt-sm="33">
+                <label>SoD Category</label>
+                <md-select ng-model="ctrl.model.soDCategory" placeholder="BAU" ng-change="ctrl.setSODDate(form)" >
+                                      <md-option ng-repeat="item in ctrl.soDCategory" ng-value="item">
+                        {{item}}
+                    </md-option>
+                    <md-tooltip md-direction="bottom">SoD Category</md-tooltip>
+                </md-select>
+            </md-input-container>
+        </div>
+
+        <div layout-gt-md="row" layout-padding>
+            <!--
+  <div class="md-block" flex-gt-sm="33">
+                <h5 style="font-weight: normal !important">Strategy date</h5>
+                <md-datepicker ng-model="ctrl.model.strategyDate" md-placeholder="Enter date" md-open-on-focus>
+                </md-datepicker>
+
+                <md-input-container class="md-block">
+                    <label>Strategy</label>
+                    <md-select ng-model="ctrl.model.strategyNumber" name="strategyNumber" placeholder="Strategy">
+
+                        <md-option ng-repeat="item in ctrl.strategyNumber" ng-value="item">
+                            {{item}}
+                        </md-option>
+                    </md-select>
+
+
+                    <div ng-messages="form.strategyNumber.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            -->
+          
+            <div class="md-block" flex-gt-sm="50">
+                <h5 style="font-weight: normal !important">SoD Days Remaining</h5>
+
+                <label ng-bind="ctrl.sodDaysRemaining" ng-value="ctrl.sodDaysRemaining"></label>
+                <md-button class="md-raised md-primary" ng-disabled="ctrl.model.soDCategory == 'BAU'"
+                    ng-click="ctrl.setSoDDays(form)">Update SoD End Date
+                    <md-tooltip md-direction="bottom">Set SoD_End_Date to Today + 90 days.</md-tooltip>
+                </md-button>
+            </div>
+            <div class="md-block" flex-gt-sm="50">
+                <md-input-container class="md-block">
+                    <label>Phase</label>
+                    <md-select ng-model="ctrl.model.phase" placeholder="Phase">
+                        <md-option ng-repeat="item in ctrl.phase" ng-value="item">
+                            {{item}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+        </div>
+
+
+
+
+        <div class="md-block" flex-gt-sm="100">
+            <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+                <md-button class="md-raised md-primary" ng-click="ctrl.redirectToHome()">Cancel</md-button>
+                <md-button class="md-raised md-primary" aria-label="save" ng-show="!ctrl.isRequestProcessing"
+                    ng-disabled="!form.$dirty" ng-click="ctrl.storeResponse(form)">
+                    Save
+                </md-button>
+                <md-progress-circular class="md-primary md-hue-3" md-mode="indeterminate"
+                    ng-show="ctrl.isRequestProcessing" md-diameter="70"></md-progress-circular>
+            </section>
+        </div>
+    </ng-form>
+</md-content>
+
+<!-- changed -->

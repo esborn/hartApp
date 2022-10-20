@@ -1,0 +1,10 @@
+{
+    "none": "None",
+    "draft": "Draft",
+    "submitted": "Submitted",    
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "completed": "Completed",
+    "revertedToDraft": "Reverted to Draft",
+    "all": ["None", "Draft", "Submitted", "Approved", "Rejected", "Completed", "Reverted to Draft"]
+}

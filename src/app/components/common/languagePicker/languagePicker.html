@@ -1,0 +1,12 @@
+<md-fab-speed-dial md-open="ctrl.languageOpen" md-direction="{{ctrl.languageDirection}}" class="md-scale">
+    <md-fab-trigger>
+        <md-button aria-label="menu" class="language-button">
+            <i class="material-icons md-icon-30">language</i>
+        </md-button>
+    </md-fab-trigger>
+    <md-fab-actions>
+        <md-button ng-repeat="item in ctrl.languages" ng-click="ctrl.changeLanguage(item)" aria-label="lang" class="md-raised">
+            {{item}}
+        </md-button>
+    </md-fab-actions>
+</md-fab-speed-dial>

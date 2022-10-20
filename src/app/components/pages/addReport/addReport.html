@@ -1,0 +1,1802 @@
+<div ng-if="ctrl.readOnly === true">
+    <view-report main="ctrl"></view-report>
+</div>
+
+<md-content ng-cloak class="md-inline-form" ng-if="ctrl.readOnly === false">
+    <ng-form name="form" novalidate>
+        <div layout-gt-sm="row" layout-align="space-between center">
+            <h1>&nbsp;{{ctrl.code}} - {{ctrl.country}} - {{ctrl.region}}&nbsp;</h1>
+            <h3>&nbsp;{{ctrl.description}}</h3>
+            <div layout="row">
+                <md-button class="md-raised md-primary" aria-label="save" ng-if="ctrl.saveDraft" ng-hide="ctrl.isRequestProcessing" ng-click="ctrl.storeAsDraft(form)">
+                    Save Draft
+                </md-button>
+                <md-button class="md-raised md-primary" aria-label="save" ng-if="ctrl.submit === true" ng-hide="ctrl.isRequestProcessing"
+                    ng-click="ctrl.submitReport(form)" ng-disabled="form.$invalid">
+                    Submit
+                </md-button>
+                <md-progress-circular md-mode="indeterminate" class="md-primary md-hue-3" ng-show="ctrl.isRequestProcessing" md-diameter="70"></md-progress-circular>
+            </div>
+        </div>
+
+        <div ng-show="!form.$valid && !form.$pristine" class="well-error">
+            <div ng-show="form.sitrepNumber.$invalid || form.generalContextInternal.$invalid || form.generalContextExternal.$invalid || form.responseUpdateInternal.$invalid
+            || form.responseUpdateExternal.$invalid || form.challengesInternal.$invalid || form.opsBackstop.$invalid">
+                <h4>General Info errors</h4>
+                <div ng-messages="form.sitrepNumber.$error" ng-show="form.sitrepNumber.$invalid">
+                    <div ng-message="required">Sitrep Number is required</div>
+                    <div ng-message="max">Sitrep Number is too high</div>
+                </div>
+                <div ng-messages="form.generalContextInternal.$error" ng-show="form.generalContextInternal.$invalid">
+                    <div ng-message="required">General Context (Internal) is required</div>
+                    <div ng-message="md-maxlength">General Context (Internal) is too long</div>
+                </div>
+                <div ng-messages="form.generalContextExternal.$error" ng-show="form.generalContextExternal.$invalid">
+                    <div ng-message="required">General Context (External) is required</div>
+                    <div ng-message="md-maxlength">General Context (External) is too long</div>
+                </div>
+                <div ng-messages="form.responseUpdateInternal.$error" ng-show="form.responseUpdateInternal.$invalid">
+                    <div ng-message="required">Response Update (Internal) is required</div>
+                    <div ng-message="md-maxlength">Response Update (Internal) is too long</div>
+                </div>
+                <div ng-messages="form.responseUpdateExternal.$error" ng-show="form.responseUpdateExternal.$invalid">
+                    <div ng-message="required">Response Update (External) is required</div>
+                    <div ng-message="md-maxlength">Response Update (External) is too long</div>
+                </div>
+                <div ng-messages="form.challengesInternal.$error" ng-show="form.challengesInternal.$invalid">
+                    <div ng-message="required">Challenges Internal is required</div>
+                    <div ng-message="md-maxlength">Challenges Internal is too long</div>
+                </div>                
+                <div ng-messages="form.opsBackstop.$error" ng-show="form.opsBackstop.$invalid">
+                    <div ng-message="required">Ops Backstop is required</div>
+                    <div ng-message="md-maxlength">Ops Backstop is too long</div>
+                </div>
+                <div ng-messages="form.responseImageCredits.$error" ng-show="form.responseImageCredits.$invalid">                                        
+                    <div ng-message="md-maxlength">Response image credits is too long</div>
+                </div>
+            </div>
+
+            <div ng-show="form.affectedPopulation.$invalid || form.affectedChildren.$invalid || form.strategyTarget.$invalid || form.strategyTargetChildren.$invalid
+            || form.totalReachSinceStart.$invalid || form.totalReachSinceLastSitrep.$invalid || form.childrenReachedSinceStart.$invalid || form.childrenReachedSinceLastSitrep.$invalid
+            || form.totalReachInCurrentYear.$invalid || form.childrenReachInCurrentYear.$invalid">
+                <h4>Reach figures errors</h4>
+                <div ng-messages="form.affectedPopulation.$error" ng-show="form.affectedPopulation.$invalid">
+                    <div ng-message="required">Affected Population is required</div>
+                    <div ng-message="max">Affected Population is too high</div>
+                </div>
+                <div ng-messages="form.affectedChildren.$error" ng-show="form.affectedChildren.$invalid">
+                    <div ng-message="required">Number of children affected is required</div>
+                    <div ng-message="max">Number of children affected is too high</div>
+                </div>
+
+
+
+                <div ng-messages="form.strategyTarget.$error" ng-show="form.strategyTarget.$invalid">
+                    <div ng-message="required">Strategy Target is required</div>
+                    <div ng-message="max">Strategy Target is too high</div>
+                </div>
+                <div ng-messages="form.strategyTargetChildren.$error" ng-show="form.strategyTargetChildren.$invalid">
+                    <div ng-message="required">Strategy Target Children is required</div>
+                    <div ng-message="max">Strategy Target Children is too high</div>
+                </div>
+
+
+
+                <div ng-messages="form.totalReachSinceStart.$error" ng-show="form.totalReachSinceStart.$invalid">
+                    <div ng-message="required">Men reached since start of response</div>
+                    <div ng-message="max">Men Reach Since Start is too high</div>
+                </div>
+                <div ng-messages="form.totalReachSinceLastSitrep.$error" ng-show="form.totalReachSinceLastSitrep.$invalid">
+                    <div ng-message="required">Men Reach Since Last Sitrep is required</div>
+                    <div ng-message="max">Men Reach Since Last Sitrep is too high</div>
+                </div>
+                <div ng-messages="form.totalReachInCurrentYear.$error" ng-show="form.totalReachInCurrentYear.$invalid">
+                    <div ng-message="required">Men reach figures for current year is required</div>
+                    <div ng-message="max">Men reach in current year too high</div>
+                </div>
+
+
+                <div ng-messages="form.childrenReachedSinceStart.$error" ng-show="form.childrenReachedSinceStart.$invalid">
+                    <div ng-message="required">Boys Reached Since Start is required</div>
+                    <div ng-message="max">Boys Reached Since Start too high</div>
+                </div>
+                <div ng-messages="form.childrenReachedSinceLastSitrep.$error" ng-show="form.childrenReachedSinceLastSitrep.$invalid">
+                    <div ng-message="required">Boys Reached Since last Sitrep is required</div>
+                    <div ng-message="max">Boys Reached Since last Sitrep is too high</div>
+                </div>
+                <div ng-messages="form.childrenReachInCurrentYear.$error" ng-show="form.childrenReachInCurrentYear.$invalid">
+                    <div ng-message="required">Boys reach current year is required</div>
+                    <div ng-message="max">Boys reach figures for current year, for current strategy is too high</div>
+                </div>
+                
+
+                <div ng-messages="form.totalGirlsReachSinceStart.$error" ng-show="form.totalGirlsReachSinceStart.$invalid">
+                    <div ng-message="required">Girls Reached Since Start is required</div>
+                    <div ng-message="max">Girls Reached Since Start too high</div>
+                </div>
+                <div ng-messages="form.girlsReachedSinceLastSitrep.$error" ng-show="form.girlsReachedSinceLastSitrep.$invalid">
+                    <div ng-message="required">Girls Reached Since last Sitrep is required</div>
+                    <div ng-message="max">Girls Reached Since last Sitrep is too high</div>
+                </div>
+                <div ng-messages="form.girlsReachInCurrentYear.$error" ng-show="form.girlsReachInCurrentYear.$invalid">
+                    <div ng-message="required">Girls reach figures for current year is required</div>
+                    <div ng-message="max">Girls reach in current year too high</div>
+                </div>
+
+
+                <div ng-messages="form.womenReachSinceStart.$error" ng-show="form.womenReachSinceStart.$invalid">
+                    <div ng-message="required">Women Reached Since Start is required</div>
+                    <div ng-message="max">Wonen Reached Since Start too high</div>
+                </div>
+                <div ng-messages="form.womenReachSinceLastSitrep.$error" ng-show="form.womenReachSinceLastSitrep.$invalid">
+                    <div ng-message="required">Women Reached Since last Sitrep is required</div>
+                    <div ng-message="max">Women Reached Since last Sitrep is too high</div>
+                </div>
+                <div ng-messages="form.womenReachInCurrentYear.$error" ng-show="form.womenReachInCurrentYear.$invalid">
+                    <div ng-message="required">Women reach figures for current year is required</div>
+                    <div ng-message="max">Women reach in current year too high</div>
+                </div>
+
+
+            </div>
+            <div ng-show="form.responseStrategyTarget.$invalid || form.seedFundsTarget.$invalid || form.crisisModifiers.$invalid
+            || form.securedIncome.$invalid || form.newAwards.$invalid || form.responsePipeline.$invalid || form.responsePipelineAppeal.$invalid
+            || form.seedFundsSecured.$invalid || form.seedFundsSecuredYearly.$invalid || form.cSF.$invalid">
+                <h4>Income errors</h4>
+                <div ng-messages="form.responseStrategyTarget.$error" ng-show="form.responseStrategyTarget.$invalid">
+                    <div ng-message="required">Response Strategy Target is required</div>
+                    <div ng-message="max">Response Strategy Target is too high</div>
+                </div>
+                <div ng-messages="form.seedFundsTarget.$error" ng-show="form.seedFundsTarget.$invalid">
+                    <div ng-message="required">Seed Funds Target is required</div>
+                    <div ng-message="max">Seed Funds Target is too high</div>
+                </div>
+                <div ng-messages="form.crisisModifiers.$error" ng-show="form.crisisModifiers.$invalid">
+                    <div ng-message="max">Crisis Modifiers is too high</div>
+                </div>
+                <div ng-messages="form.securedIncome.$error" ng-show="form.securedIncome.$invalid">
+                    <div ng-message="required">Secured Income is required</div>
+                    <div ng-message="max">Secured Income is too high</div>
+                </div>
+                <div ng-messages="form.newAwards.$error" ng-show="form.newAwards.$invalid">
+                    <div ng-message="required">New Awards is required</div>
+                    <div ng-message="max">New Awards is too high</div>
+                </div>
+                <div ng-messages="form.responsePipeline.$error" ng-show="form.responsePipeline.$invalid">
+                    <div ng-message="required">Response Pipeline is required</div>
+                    <div ng-message="max">Response Pipeline is too high</div>
+                </div>
+                <div ng-messages="form.responsePipelineAppeal.$error" ng-show="form.responsePipelineAppeal.$invalid">
+                    <div ng-message="required">Response Pipeline Appeal is required</div>
+                    <div ng-message="max">Response Pipeline Appeal is too high</div>
+                </div>
+                <div ng-messages="form.seedFundsSecured.$error" ng-show="form.seedFundsSecured.$invalid">
+                    <div ng-message="required">Seed Funds Secured is required</div>
+                    <div ng-message="max">Seed Funds Secured is too high</div>
+                </div>
+                <div ng-messages="form.seedFundsSecuredYearly.$error" ng-show="form.seedFundsSecuredYearly.$invalid">
+                    <div ng-message="required">Seed Funds Secured Yearly is required</div>
+                    <div ng-message="max">Seed Funds Secured Yearly is too high</div>
+                </div>
+                <div ng-messages="form.cSF.$error" ng-show="form.cSF.$invalid">
+                    <div ng-message="required">CSF is required</div>
+                    <div ng-message="max">CSF is too high</div>
+                </div>
+            </div>
+            <div ng-if="ctrl.model.nonSciResponses" ng-show="form.responseTotalSpend.$invalid || form.totalSpendAgainstCSF.$invalid
+            || form.totalSpendThroughPartners.$invalid || form.totalSpendThroughCTP.$invalid || form.totalSpendEducation.$invalid">
+                <h4>Spend errors</h4>
+                <div ng-messages="form.responseTotalSpend.$error" ng-show="form.responseTotalSpend.$invalid">
+                    <div ng-message="required">Response Total Spend is required</div>
+                    <div ng-message="max">Response Total Spend is too high</div>
+                </div>
+                <div ng-messages="form.totalSpendAgainstCSF.$error" ng-show="form.totalSpendAgainstCSF.$invalid">
+                    <div ng-message="required">Total Spend Against CSF is required</div>
+                    <div ng-message="max">Total Spend Against CSF is too high</div>
+                </div>
+                <div ng-messages="form.totalSpendThroughPartners.$error" ng-show="form.totalSpendThroughPartners.$invalid">
+                    <div ng-message="required">Total Spend Through Partners is required</div>
+                    <div ng-message="max">Total Spend Through Partners is too high</div>
+                </div>
+                <div ng-messages="form.totalSpendThroughCTP.$error" ng-show="form.totalSpendThroughCTP.$invalid">
+                    <div ng-message="required">Total Spend Through CTP is required</div>
+                    <div ng-message="max">Total Spend Through CTP is too high</div>
+                </div>
+                <div ng-messages="form.totalSpendEducation.$error" ng-show="form.totalSpendEducation.$invalid">
+                    <div ng-message="required">Total Spend Education is required</div>
+                    <div ng-message="max">Total Spend Education is too high</div>
+                </div>
+            </div>
+            <div ng-show="form.assessment.$invalid || form.outline.$invalid || form.strategy.$invalid || form.plan.$invalid
+            || form.operationsControlReview.$invalid || form.realTimeReview.$invalid || form.percentTimeToEducationCluster.$invalid">
+                <h4>Deliverables errors</h4>
+                <div ng-messages="form.assessment.$error" ng-show="form.assessment.$invalid">
+                    <div ng-message="required">Assessment is required</div>
+                </div>
+                <div ng-messages="form.outline.$error" ng-show="form.outline.$invalid">
+                    <div ng-message="required">Outline is required</div>
+                </div>
+                <div ng-messages="form.strategy.$error" ng-show="form.strategy.$invalid">
+                    <div ng-message="required">Strategy is required</div>
+                </div>
+                <div ng-messages="form.plan.$error" ng-show="form.plan.$invalid">
+                    <div ng-message="required">Plan is required</div>
+                </div>
+                <div ng-messages="form.operationsControlReview.$error" ng-show="form.operationsControlReview.$invalid">
+                    <div ng-message="required">Operations Control Review is required</div>
+                </div>
+                <div ng-messages="form.realTimeReview.$error" ng-show="form.realTimeReview.$invalid">
+                    <div ng-message="required">Real Time Review is required</div>
+                </div>
+                <div ng-messages="form.percentTimeToEducationCluster.$error" ng-show="form.percentTimeToEducationCluster.$invalid">
+                    <div ng-message="max">% time to Education Cluster is over 100</div>
+                </div>
+            </div>
+            <div ng-show="form.childProtectionBackstop.$invalid || form.childProtectionSummary.$invalid || form.educationBackstop.$invalid
+            || form.educationSummary.$invalid || form.fSLBackstop.$invalid || form.fSLSummary.$invalid || form.wASHBackstop.$invalid
+            || form.wASHSummary.$invalid || form.shelterBackstop.$invalid || form.shelterSummary.$invalid || form.healthBackstop.$invalid
+            || form.healthSummary.$invalid || form.nutritionSummary.$invalid">
+                <h4>Sectors errors</h4>
+                <div ng-messages="form.childProtectionBackstop.$error" ng-show="form.childProtectionBackstop.$invalid">
+                    <div ng-message="required">childProtectionBackstop is required</div>
+                </div>
+                <div ng-messages="form.childProtectionSummary.$error" ng-show="form.childProtectionSummary.$invalid">
+                    <div ng-message="required">Child Protection Summary is required</div>
+                    <div ng-message="md-maxlength">Child Protection Summary's too long</div>
+                </div>
+                <div ng-messages="form.educationBackstop.$error" ng-show="form.educationBackstop.$invalid">
+                    <div ng-message="required">Education Backstop is required</div>
+                </div>
+                <div ng-messages="form.educationSummary.$error" ng-show="form.educationSummary.$invalid">
+                    <div ng-message="required">Education Summary is required</div>
+                    <div ng-message="md-maxlength">Education Summary's too long</div>
+                </div>
+                <div ng-messages="form.fSLBackstop.$error" ng-show="form.fSLBackstop.$invalid">
+                    <div ng-message="required">FSL Backstop is required</div>
+                </div>
+                <div ng-messages="form.fSLSummary.$error" ng-show="form.fSLSummary.$invalid">
+                    <div ng-message="required">FSL Summary is required</div>
+                    <div ng-message="md-maxlength">FSL Summary is too long</div>
+                </div>
+                <div ng-messages="form.wASHBackstop.$error" ng-show="form.wASHBackstop.$invalid">
+                    <div ng-message="required">WASH Backstop is required</div>
+                </div>
+                <div ng-messages="form.wASHSummary.$error" ng-show="form.wASHSummary.$invalid">
+                    <div ng-message="required">WASH Summary is required</div>
+                    <div ng-message="md-maxlength">WASH Summary is too long</div>
+                </div>
+
+                 <div ng-messages="form.mEALBackstop.$error" ng-show="form.mEALBackstop.$invalid">
+                    <div ng-message="required">MEAL Backstop is required</div>
+                </div>
+                <div ng-messages="form.mEALSummary.$error" ng-show="form.mEALSummary.$invalid">
+                    <div ng-message="required">MEAL Summary is required</div>
+                    <div ng-message="md-maxlength">MEAL Summary is too long</div>
+                </div>
+
+                <div ng-messages="form.shelterBackstop.$error" ng-show="form.shelterBackstop.$invalid">
+                    <div ng-message="required">Shelter Backstop is required</div>
+                </div>
+                <div ng-messages="form.shelterSummary.$error" ng-show="form.shelterSummary.$invalid">
+                    <div ng-message="required">Shelter Summary is required</div>
+                    <div ng-message="md-maxlength">Shelter Summary's too long</div>
+                </div>
+                <div ng-messages="form.healthBackstop.$error" ng-show="form.healthBackstop.$invalid">
+                    <div ng-message="required">Health Backstop is required</div>
+                </div>
+                <div ng-messages="form.healthSummary.$error" ng-show="form.healthSummary.$invalid">
+                    <div ng-message="required">Health Summary is required</div>
+                    <div ng-message="md-maxlength">Health Summary is too long</div>
+                </div>
+                <div ng-messages="form.nutritionBackstop.$error" ng-show="form.nutritionBackstop.$invalid">
+                        <div ng-message="required">Nutrition Backstop is required</div>
+                    </div>
+                <div ng-messages="form.nutritionSummary.$error" ng-show="form.nutritionSummary.$invalid">
+                    <div ng-message="required">Nutrition Summary is required</div>
+                    <div ng-message="md-maxlength">Nutrition Summary is too long</div>
+                </div>
+            </div>
+            <div ng-show="form.nationalStaffNumber.$invalid || form.internationalStaffNumber.$invalid">
+                <h4>HR errors</h4>
+                <div ng-messages="form.nationalStaffNumber.$error" ng-show="form.nationalStaffNumber.$invalid">
+                    <div ng-message="max">National Staff Number is too high</div>
+                    <div ng-message="required">National Staff Number is required</div>
+                </div>
+                <div ng-messages="form.internationalStaffNumber.$error" ng-show="form.internationalStaffNumber.$invalid">
+                    <div ng-message="max">International Staff Number is too high</div>
+                    <div ng-message="required">International Staff Number is required</div>
+                </div>
+            </div>
+            <div ng-show="form.securityContext.$invalid || form.securityChallenges.$invalid || form.securityManagement.$invalid">
+                <h4>Safety and Security errors</h4>
+                <div ng-messages="form.securityContext.$error" ng-show="form.securityContext.$invalid">
+                    <div ng-message="required">Security Context is required</div>
+                    <div ng-message="md-maxlength">Security Context is too long</div>
+                </div>
+                <div ng-messages="form.securityChallenges.$error" ng-show="form.securityChallenges.$invalid">
+                    <div ng-message="required">Security Challenges is required</div>
+                    <div ng-message="md-maxlength">Security Challenges is too long</div>
+                </div>
+                <div ng-messages="form.securityManagement.$error" ng-show="form.securityManagement.$invalid">
+                    <div ng-message="required">Security Management is required</div>
+                    <div ng-message="md-maxlength">Security Management is too long</div>
+                </div>
+            </div>
+            <div ng-show="form.safegaurdingFocalPoint.$invalid || form.safegaurdingRisks.$invalid">
+                <h4>Child Safeguarding errors</h4>
+                <div ng-messages="form.safegaurdingFocalPoint.$error" ng-show="form.safegaurdingFocalPoint.$invalid">
+                    <div ng-message="required">This is required</div>
+                </div>
+                <div ng-messages="form.safegaurdingRisks.$error" ng-show="form.safegaurdingRisks.$invalid">
+                    <div ng-message="required">This is required</div>
+                </div>
+            </div>
+            <div ng-show="form.spokespeople.$invalid || form.mediaCoverage.$invalid || form.advocacyActions.$invalid">
+                <h4>Advocacy, Media and Comms</h4>
+                <div ng-messages="form.spokespeople.$error" ng-show="form.spokespeople.$invalid">
+                    <div ng-message="required">Spokespeople is required</div>
+                </div>
+                <div ng-messages="form.mediaCoverage.$error" ng-show="form.mediaCoverage.$invalid">
+                    <div ng-message="required">Media and Content Update is required</div>
+                    <div ng-message="md-maxlength">Media and Content Update too long</div>
+                </div>
+                <div ng-messages="form.advocacyActions.$error" ng-show="form.advocacyActions.$invalid">
+                    <div ng-message="required">Advocacy Update is required</div>
+                    <div ng-message="md-maxlength">Advocacy Update is too long</div>
+                </div>
+            </div>
+            <div ng-show="form.plannedProcurement.$invalid || form.procurementSpend.$invalid">
+                <h4>Emergency supply chain</h4>
+                <div ng-messages="form.plannedProcurement.$error" ng-show="form.plannedProcurement.$invalid">
+                    <div ng-message="max">Planned Procurement is too high</div>
+                </div>
+                <div ng-messages="form.procurementSpend.$error" ng-show="form.procurementSpend.$invalid">
+                    <div ng-message="max">Procurement Spend is too high</div>
+                </div>
+            </div>
+        </div>
+
+        <toggle-accordion-section></toggle-accordion-section>
+        <div layout-gt-md="row" layout-padding>
+            <div class="md-block" flex-gt-sm="25">
+                <label>Non SCI Implemented</label>
+                <md-tooltip md-direction="right">Please tick if the response is led by an SC member or is a member domestic response.</md-tooltip>
+                <md-checkbox ng-model="ctrl.model.nonSciResponses">
+                </md-checkbox>
+            </div>
+            <md-input-container class="md-block" flex-gt-sm="75">
+                <label>Comments</label>
+                <md-tooltip md-direction="bottom">Add any notes you may want about this report for other users. This will not be published.</md-tooltip>
+                <textarea ng-model="ctrl.model.reportComments" name="comments" rows="6"></textarea>
+            </md-input-container>
+
+            <!-- <mat-form-field class="example-full-width md-block" flex-gt-sm="75">
+                    <md-tooltip md-direction="bottom">Add any notes you may want about this report for other users. This will not be published.</md-tooltip>
+                    <textarea matInput placeholder="Comments" ng-model="ctrl.model.comments" name="comments" rows="6"></textarea>
+                </mat-form-field> -->
+        </div>
+        <accordion heading="General Info">
+            <div layout-gt-md="row" layout-padding>
+                <div class="md-block" style="margin-top: -47px;" flex-gt-sm="25">
+                    <h5 style="font-weight: normal !important">Sitrep date</h5>
+                    <md-datepicker ng-model="ctrl.model.sitrepDate" md-placeholder="Enter date" disabled></md-datepicker>
+                </div>
+                <md-input-container class="md-block" flex-gt-sm="25">
+                    <label>Sitrep Number</label>
+                    <input type="number" ng-model="ctrl.model.sitrepNumber" name="sitrepNumber" max="999" required></input>
+                    <div ng-messages="form.sitrepNumber.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too long</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                                <md-input-container class="md-block" flex-gt-sm="25">
+                                
+                                    <label>Final sitrep</label>
+                                    
+
+
+                                    <md-checkbox ng-model="ctrl.model.finalSitrep" >
+                                    </md-checkbox>
+                                </md-input-container>
+                <div class="md-block" style="margin-top: -47px;" flex-gt-sm="25" ng-if="!ctrl.model.finalSitrep">
+
+                    <h5 style="font-weight: normal !important">Next sitrep</h5>
+                    <md-datepicker ng-model="ctrl.model.nextSitrepDate"  md-placeholder="Enter date"></md-datepicker>
+                </div>
+            </div>
+
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label>Ops Backstop</label>
+                    <textarea ng-model="ctrl.model.opsBackstop" name="opsBackstop" md-maxlength="200" required></textarea>
+                    <div ng-messages="form.opsBackstop.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="md-maxlength">That's too long</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="100">
+                    <label>General Context External</label>
+                    <md-tooltip md-direction="bottom">Highlight the scale of the emergency, how much bigger is it likely to get, and recent context developments that may be shared externally.</md-tooltip>
+                    <textarea ng-model="ctrl.model.generalContextExternal" name="generalContextExternal" md-maxlength="1200" required></textarea>
+                    <div ng-messages="form.generalContextExternal.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="md-maxlength">That's too long</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="100">
+                    <label>General Context Internal</label>
+                    <md-tooltip md-direction="bottom">Include the same information as the external general context with any additional contextual information that is strictly for internal use.</md-tooltip>
+                    <textarea ng-model="ctrl.model.generalContextInternal" name="generalContextInternal" md-maxlength="1500" required></textarea>
+                    <div ng-messages="form.generalContextInternal.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="md-maxlength">That's too long</div>
+                    </div>
+                </md-input-container>
+            </div>           
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="100">
+                    <label>Response Update External</label>
+                    <md-tooltip md-direction="bottom">Provide an overview of where we are working, when the response started, and what sectors we are working in. Outline any recent plans for scale up across sectors or operational areas.</md-tooltip>
+                    <textarea ng-model="ctrl.model.responseUpdateExternal" name="responseUpdateExternal" md-maxlength="1200" required></textarea>
+                    <div ng-messages="form.responseUpdateExternal.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="md-maxlength">That's too long</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="100">
+                    <label>Response Update Internal</label>
+                    <md-tooltip md-direction="bottom">Include the same information as the external response update with any additional response updates that are strictly for internal use.</md-tooltip>
+                    <textarea ng-model="ctrl.model.responseUpdateInternal" name="responseUpdateInternal" md-maxlength="1200" required></textarea>
+                    <div ng-messages="form.responseUpdateInternal.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="md-maxlength">That's too long</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="100">
+                    <label>Challenges Internal</label>
+                    <md-tooltip md-direction="bottom">Highlight the barriers/challenges affecting our ability to respond. This could include security incidents,
+                        funding gaps, access restrictions, staffing issues etc.</md-tooltip>
+                    <textarea ng-model="ctrl.model.challengesInternal" name="challengesInternal" md-maxlength="1200" required></textarea>
+                    <div ng-messages="form.challengesInternal.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="md-maxlength">That's too long</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <label>Response image signed off for external use</label>   
+                <md-tooltip md-direction="bottom">Upload a photo from the response which has been signed off for external use</md-tooltip>                                    
+            </div>
+            <div layout-gt-md="row" layout-padding>
+                <div layout-gt-sm="row" flex-gt-sm="100" layout-padding ng-show="ctrl.model.uploadedAttachments.length == 0 && ctrl.readOnly === false">
+                    <file-upload ng-model="ctrl.model.uploadAttachments" unique-id="rep" some-prop="rep123" max-files="1" flex-gt-sm="100" class="attachment-controls"></file-upload>
+                </div>
+                <div layout-gt-sm="row" flex-gt-sm="100" layout-padding ng-show="ctrl.model.uploadedAttachments.length > 0">                    
+                    <attachments  flex-gt-sm="50" ng-model="ctrl.model.uploadedAttachments" options="ctrl.attachmentsOptions" flex-gt-sm="100" class="attachment-controls"></attachments>
+                </div>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="100">
+                    <label>Response image credits</label>
+                    <md-tooltip md-direction="bottom">Please provide the name of the photographer followed by /Save the Children</md-tooltip>
+                    <textarea ng-model="ctrl.model.responseImageCredits" name="responseImageCredits" md-maxlength="250"></textarea>
+                    <div ng-messages="form.responseImageCredits.$error">                               
+                        <div ng-message="md-maxlength">That's too long</div>
+                    </div>
+                </md-input-container>
+            </div>
+        </accordion>
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+        <accordion heading="Response Strategy">
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="25">
+                   
+                    <label>Response Strategy in place?</label>
+                    <md-checkbox ng-model="ctrl.model.strategyInPlace">
+                    </md-checkbox>
+                </md-input-container>
+
+            </div>
+
+
+
+            <div layout-gt-md="row" layout-padding ng-if="ctrl.model.strategyInPlace">
+
+                <div class="md-block" flex-gt-sm="40">
+                    <label>Response Strategy Period Start</label>
+                    <md-datepicker ng-model="ctrl.model.strategyPeriodStart" md-max-date="ctrl.maxDate" md-placeholder="Enter date"
+                        md-open-on-focus></md-datepicker>
+                    <md-tooltip md-direction="bottom">Please indicate the strategy Period. </md-tooltip>
+                </div>
+                            <div class="md-block" flex-gt-sm="40">
+                                <label>Response Strategy Period End</label>
+                                <md-datepicker ng-model="ctrl.model.strategyPeriodEnd"  md-placeholder="Enter date"
+                                    md-open-on-focus></md-datepicker>
+                                <md-tooltip md-direction="bottom">Please indicate the strategy Period. </md-tooltip>
+                            </div>
+            
+            </div>
+                                        <div layout-gt-md="row" layout-padding>
+                                            <label style="width: 128px">Response Strategy</label>
+                                            <md-checkbox ng-model="ctrl.model.strategyBool">
+                                            </md-checkbox>
+                                            <md-input-container class="md-block" flex-gt-sm="55" ng-if="ctrl.model.strategyBool">
+                                                <label>Address of OneNet document</label>
+                                                <textarea ng-model="ctrl.model.strategy" name="strategy" required></textarea>
+                                                <div ng-messages="form.strategy.$error">
+                                                    <div ng-message="required">This is required</div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+        </accordion>
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------------->
+        <accordion heading="Reach figures">
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="35">
+                    <label>Affected population</label>
+                    <input type="number" ng-model="ctrl.model.affectedPopulation" name="affectedPopulation"  required></input>
+                    <md-tooltip md-direction="bottom">Please add the total number of people affected by this humanitarian emergency. This number can be updated for each
+                    sitrep and every month.
+                    </md-tooltip>
+                    <div ng-messages="form.affectedPopulation.$error">
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="35">
+                    <label>Number of children affected</label>
+                    <input type="number" ng-model="ctrl.model.affectedChildren" name="affectedChildren" max="{{ctrl.model.affectedPopulation}}" required></input>
+                    <md-tooltip md-direction="bottom">Please add the total number of children only affected by this emergency. (this number can change if the situation
+                    changes during a response)
+                    </md-tooltip>
+                    <div ng-messages="form.affectedChildren.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">This can't be higher than Affected population</div>
+                    </div>
+                </md-input-container>
+
+                                <md-input-container class="md-block" flex-gt-sm="30">
+                                    <label>New/Unique Beneficiaries reached this month (Optional)</label>
+                                    <input type="number" ng-model="ctrl.model.monthUniqueBeneficiaries" name="monthUniqueBeneficiaries"
+                                        max="{{ctrl.model.affectedPopulation}}" ></input>
+                                    <md-tooltip md-direction="bottom">[Optional] If you already calculate this, please mention the number of new beneficiaries reached this month for the
+                                    first time (only count beneficiaries who have not been reached before in this response)
+                                    </md-tooltip>
+                                    <div ng-messages="form.monthUniqueBeneficiaries.$error">
+                                        <div ng-message="max">This can't be higher than Affected population</div>
+                                    </div>
+                                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label>Beneficiary Reach Target for strategy period (adults and children)</label>
+                    <input type="number" ng-model=ctrl.model.strategyTarget name="strategyTarget" min="1" max="9999999999" required></input>
+                    <md-tooltip md-direction="bottom">Please add the total number of people we aim to reach for the entire strategy period. (this number can change if the
+                    situation changes during a response)
+                    </md-tooltip>
+                    <div ng-messages="form.strategyTarget.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high</div>
+                        <div ng-message="min">This number cannot be 0, please double-check response strategy</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label>Children Reach target for strategy period</label>
+                    <input type="number" min="1" max="9999999999" required ng-model="ctrl.model.strategyTargetChildren" name="strategyTargetChildren"  max="{{ctrl.model.strategyTarget}}"></input>
+                    <md-tooltip md-direction="bottom">Please add the total number of children only we aim to reach in the entire strategy period. (this number can change if
+                    the situation changes during a response)
+                    </md-tooltip>
+                    <div ng-messages="form.strategyTargetChildren.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high</div>
+                        <div ng-message="min">This number cannot be 0, please double-check response strategy.
+                        This number cannot be higher than the number for Reach target for strategy period (all).</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="25">
+                    <label>Men reached since start of response </label>
+                    <input type="number" max="9999999999" required ng-model="ctrl.model.totalReachSinceStart" name="totalReachSinceStart"></input>
+                    <md-tooltip md-direction="bottom">Please input the total number of people reached since the start of the response.
+                    </md-tooltip>
+                    <div ng-messages="form.totalReachSinceStart.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high</div>
+                    </div>
+                </md-input-container>
+
+                                <md-input-container class="md-block" flex-gt-sm="25">
+                                    <label>Women reached since start of response </label>
+                                    <input type="number" max="9999999999" required ng-model="ctrl.model.womenReachSinceStart"
+                                        name="womenReachSinceStart"></input>
+                                    <md-tooltip md-direction="bottom">Please input the total number of people reached since the start of the response.
+                                    </md-tooltip>
+                                    <div ng-messages="form.womenReachSinceStart.$error">
+                                        <div ng-message="required">This is required</div>
+                                        <div ng-message="max">That's too high</div>
+                                    </div>
+                                </md-input-container>
+                                
+                <md-input-container class="md-block" flex-gt-sm="25">
+                    <label>Boys reached since start of response</label>
+                <input type="number" max="9999999999"  required ng-model="ctrl.model.childrenReachedSinceStart" name="childrenReachedSinceStart"></input>
+                    <md-tooltip md-direction="bottom">Please input the total number of boys reached since the start of the response.
+                    </md-tooltip>
+                    <div ng-messages="form.childrenReachedSinceStart.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high</div>
+                    </div>
+                </md-input-container>
+
+                                <md-input-container class="md-block" flex-gt-sm="25">
+                                    <label>Girls reached since start of response</label>
+                                    <input type="number"  required max="9999999999"
+                                        ng-model="ctrl.model.totalGirlsReachSinceStart" name="totalGirlsReachSinceStart"></input>
+                                    <md-tooltip md-direction="bottom">Please input the total number of girls reached since the start of the response.
+                                    </md-tooltip>
+                                    <div ng-messages="form.totalGirlsReachSinceStart.$error">
+                                        <div ng-message="required">This is required</div>
+                                        <div ng-message="max">That's too high</div>
+                                    </div>
+                                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="25">
+                    <label>Men reach since last sitrep</label>
+                    <input type="number" max="9999999999" required ng-model="ctrl.model.totalReachSinceLastSitrep" name="totalReachSinceLastSitrep"></input>
+                    
+                    <div ng-messages="form.totalReachSinceLastSitrep.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="25">
+                    <label>Women reach since last sitrep</label>
+                    <input type="number" max="9999999999" required ng-model="ctrl.model.womenReachSinceLastSitrep"
+                        name="womenReachSinceLastSitrep"></input>
+                
+                    <div ng-messages="form.womenReachSinceLastSitrep.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block" flex-gt-sm="25">
+                    <label>Boys reached since last sitrep</label>
+                    <input type="number" max="{{ctrl.model.childrenReachedSinceStart}}" required ng-model="ctrl.model.childrenReachedSinceLastSitrep" name="childrenReachedSinceLastSitrep"></input>
+                   
+                    <div ng-messages="form.childrenReachedSinceLastSitrep.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high, can not be higher than Total reach since last sitrep</div>
+                    </div>
+                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm="25">
+                                    <label>Girls reached since last sitrep</label>
+                                    <input type="number" required
+                                        ng-model="ctrl.model.girlsReachedSinceLastSitrep" name="girlsReachedSinceLastSitrep"></input>
+                                   
+                                    <div ng-messages="form.girlsReachedSinceLastSitrep.$error">
+                                        <div ng-message="required">This is required</div>
+                                        <div ng-message="max">That's too high, can not be higher than Total reach since last sitrep</div>
+                                    </div>
+                                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="25">
+                    <label>Men reached in current year (from Jan to Dec), for current strategy</label>
+                    <input type="number" max="{{ctrl.model.totalReachSinceStart}}" required ng-model="ctrl.model.totalReachInCurrentYear" name="totalReachInCurrentYear"></input>
+                    <div ng-messages="form.totalReachInCurrentYear.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high, can not be higher than men reached since start of response</div>
+                    </div>
+                </md-input-container>
+
+
+                                <md-input-container class="md-block" flex-gt-sm="25">
+                                    <label>Women reached in current year (from Jan to Dec), for current strategy</label>
+                                    <input type="number" max="{{ctrl.model.womenReachSinceStart}}" required ng-model="ctrl.model.womenReachInCurrentYear"
+                                        name="womenReachInCurrentYear"></input>
+                                    <div ng-messages="form.womenReachInCurrentYear.$error">
+                                        <div ng-message="required">This is required</div>
+                                        <div ng-message="max">That's too high, can not be higher than Women reached since start of response</div>
+                                    </div>
+                                </md-input-container>
+
+
+                <md-input-container class="md-block" flex-gt-sm="25">
+                    <label>Boys reached figures for current year (from Jan to Dec), for current strategy</label>
+                    <input type="number" max="{{ctrl.model.childrenReachedSinceStart}}" required  ng-model="ctrl.model.childrenReachInCurrentYear" name="childrenReachInCurrentYear"></input>
+                    <div ng-messages="form.childrenReachInCurrentYear.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high, can not be higher than boys reached since start of response</div>
+                    </div>
+                </md-input-container>
+
+                                <md-input-container class="md-block" flex-gt-sm="25">
+                                    <label>Girls reached figures for current year (from Jan to Dec), for current strategy</label>
+                                    <input type="number" max="{{ctrl.model.totalGirlsReachSinceStart}}" required  ng-model="ctrl.model.girlsReachInCurrentYear"
+                                        name="girlsReachInCurrentYear"></input>
+                                    <div ng-messages="form.girlsReachInCurrentYear.$error">
+                                        <div ng-message="required">This is required</div>
+                                        <div ng-message="max">That's too high, can not be higher than Girls reached since start of response
+                                        </div>
+                                    </div>
+                                </md-input-container>
+            </div>
+
+
+        </accordion>
+
+        <accordion heading="Income (For Internal Use Only)">
+                        <div layout-gt-md="row" layout-padding>
+                            <md-input-container class="md-block" flex-gt-sm="60">
+                        
+                                <label>Is this response's target included in the SC Humanitarian Plan?</label>
+                                <md-checkbox ng-model="ctrl.model.isHumanitarianPlanTargetIncluded">
+                                </md-checkbox>
+                            </md-input-container>
+                        
+                        
+                        </div>
+                        
+                   
+            <div layout-gt-md="row" layout-padding layout-padding ng-if="!ctrl.model.isHumanitarianPlanTargetIncluded">
+                <md-input-container class="md-block" flex-gt-sm="30">
+                    <label>Response strategy target (USD)</label>
+                    <input type="number" max="9999999999" required ng-model="ctrl.model.responseStrategyTarget" name="responseStrategyTarget"></input>
+                    <md-tooltip md-direction="bottom">Please add the total income target for the entire strategy period. </md-tooltip>
+                    <div ng-messages="form.responseStrategyTarget.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="30">
+                    <label>Current seed fund target (USD)</label>
+                    <input type="number" max="9999999999" required ng-model="ctrl.model.seedFundsTarget" name="seedFundsTarget"></input>
+                    <md-tooltip md-direction="bottom">Please add the current seed funds target. Seed funds are all flexible funds released in the immediately after
+                    categorisation of a humanitarian disaster or change in context requiring quick rapid response </md-tooltip>
+                    <div ng-messages="form.seedFundsTarget.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high</div>
+                    </div>
+                </md-input-container>
+                <div class="md-block" flex-gt-sm="30">
+                    <label>Date Current seed fund target was set</label>
+                    <md-datepicker ng-model="ctrl.model.seedFundsTargetDate"  md-max-date="ctrl.maxDate" md-placeholder="Enter date" md-open-on-focus></md-datepicker>
+                    <md-tooltip md-direction="bottom">Please indicate onwhat date this seed fund target was requested. The date of the seed fund request is important to get
+                    an accurate picture of seed funds requested vs. funds committed. </md-tooltip>
+                </div>                
+            </div>
+
+            <div layout-gt-md="row" layout-padding>                
+                <md-input-container class="md-block" flex-gt-sm="30" ng-if="ctrl.model.nonSciResponses">
+                    <label>Secured income (USD)</label>
+                    <input type="number" max="9999999999" required ng-model="ctrl.model.securedIncome" name="securedIncome"></input>
+                    <div ng-messages="form.securedIncome.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="30" ng-if="ctrl.model.nonSciResponses">
+                    <label>Of which appeal (USD)</label>
+                    <input type="number" max="9999999999" required ng-model="ctrl.model.responsePipelineAppeal" name="responsePipelineAppeal"></input>
+                    <div ng-messages="form.responsePipelineAppeal.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high</div>
+                    </div>
+                </md-input-container>                
+                <md-input-container class="md-block" flex-gt-sm="30" >
+                    <label>Crisis Modifiers (USD)</label>
+                    <input type="number" max="9999999999" ng-model="ctrl.model.crisisModifiers"   name="crisisModifiers"></input>
+                    <md-tooltip md-direction="bottom">Funds from an existing (development) project that are re-purposed to the humanitarian response. </md-tooltip>
+                    <div ng-messages="form.crisisModifiers.$error">
+                        <div ng-message="max">That's too high</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding ng-if="ctrl.model.nonSciResponses">
+                <md-input-container class="md-block" flex-gt-sm="30" ng-if="ctrl.model.nonSciResponses">
+                    <label>New awards in year (USD)</label>
+                    <input type="number" max="9999999999" required ng-model="ctrl.model.newAwards" name="newAwards"></input>
+                    <div ng-messages="form.newAwards.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="30">
+                    <label>Response Pipeline (USD)</label>
+                    <md-tooltip md-direction="bottom">High and very high likelihood</md-tooltip>
+                    <input type="number" max="9999999999" required ng-model="ctrl.model.responsePipeline" name="responsePipeline"></input>
+                    <div ng-messages="form.responsePipeline.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high</div>
+                    </div>
+                </md-input-container>
+                
+            </div>
+
+            <div layout-gt-md="row" layout-padding ng-if="ctrl.model.nonSciResponses">
+                <span><b>Seed funds</b></span>
+            </div>
+            <div layout-gt-md="row" layout-padding ng-if="ctrl.model.nonSciResponses">                
+                <md-input-container class="md-block" flex-gt-sm="30">
+                    <label>Seed funds secured (USD)</label>
+                    <input type="number" max="9999999999" required ng-model="ctrl.model.seedFundsSecured" name="seedFundsSecured"></input>
+                    <div ng-messages="form.seedFundsSecured.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="30">
+                    <label>Seed funds secured in year (USD)</label>
+                    <input type="number" max="9999999999" required ng-model="ctrl.model.seedFundsSecuredYearly" name="seedFundsSecuredYearly"></input>
+                    <div ng-messages="form.seedFundsSecuredYearly.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="30">
+                    <label>CSF (USD)</label>
+                    <input type="number" max="9999999999" required ng-model="ctrl.model.cSF" name="cSF"></input>
+                    <div ng-messages="form.cSF.$error">
+                        <div ng-message="required">CSF is required</div>
+                        <div ng-message="max">That's too high</div>
+                    </div>
+                </md-input-container>
+            </div>
+        </accordion>
+
+        <accordion heading="Spend" ng-if="ctrl.model.nonSciResponses">
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="30">
+                    <label>Response total spend (USD)</label>
+                    <input type="number" max="9999999999" required ng-model="ctrl.model.responseTotalSpend" name="responseTotalSpend"></input>
+                    <div ng-messages="form.responseTotalSpend.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="30">
+                    <label>Total spend against CSF (USD)</label>
+                    <input type="number" max="9999999999" required ng-model="ctrl.model.totalSpendAgainstCSF" name="totalSpendAgainstCSF"></input>
+                    <div ng-messages="form.totalSpendAgainstCSF.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="30">
+                    <label>Total spend through partners (USD)</label>
+                    <input type="number" max="9999999999" required ng-model="ctrl.model.totalSpendThroughPartners" name="totalSpendThroughPartners"></input>
+                    <div ng-messages="form.totalSpendThroughPartners.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="30">
+                    <label>Total spend through CTP (USD)</label>
+                    <input type="number" max="9999999999" required ng-model="ctrl.model.totalSpendThroughCTP" name="totalSpendThroughCTP"></input>
+                    <div ng-messages="form.totalSpendThroughCTP.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="30">
+                    <label>Total spend on education (USD)</label>
+                    <input type="number" max="9999999999" required ng-model="ctrl.model.totalSpendEducation" name="totalSpendEducation"></input>
+                    <div ng-messages="form.totalSpendEducation.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="max">That's too high</div>
+                    </div>
+                </md-input-container>
+            </div>
+        </accordion>
+
+
+        <accordion heading="Deliverables (For Internal Use Only)">
+            <div layout-gt-md="row" layout-padding>
+                <label style="width: 128px">Assessment</label>
+                <md-checkbox ng-model="ctrl.model.assessmentBool">
+                </md-checkbox>
+                <md-input-container class="md-block" flex-gt-sm="55" ng-if="ctrl.model.assessmentBool">
+                    <label>Address of OneNet document</label>
+                    <textarea ng-model="ctrl.model.assessment" name="assessment" required></textarea>
+                    <div ng-messages="form.assessment.$error">
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <label style="width: 128px">Outline</label>
+                <md-checkbox ng-model="ctrl.model.outlineBool">
+                </md-checkbox>
+                <md-input-container class="md-block" flex-gt-sm="55" ng-if="ctrl.model.outlineBool">
+                    <label>Address of OneNet document</label>
+                    <textarea ng-model="ctrl.model.outline" name="outline" required></textarea>
+                    <div ng-messages="form.outline.$error">
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <label style="width: 128px">Plan</label>
+                <md-checkbox ng-model="ctrl.model.planBool">
+                </md-checkbox>
+                <md-input-container class="md-block" flex-gt-sm="55" ng-if="ctrl.model.planBool">
+                    <label>Address of OneNet document</label>
+                    <textarea ng-model="ctrl.model.plan" name="plan" required></textarea>
+                    <div ng-messages="form.plan.$error">
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+
+
+            <div layout-gt-md="row" layout-padding>
+                <label style="width: 128px">Operations Control review</label>
+                <md-checkbox ng-model="ctrl.model.operationsControlReviewBool">
+                </md-checkbox>
+                <md-input-container class="md-block" flex-gt-sm="55" ng-if="ctrl.model.operationsControlReviewBool">
+                    <label>Address of OneNet document</label>
+                    <textarea ng-model="ctrl.model.operationsControlReview" name="operationsControlReview" required></textarea>
+                    <div ng-messages="form.operationsControlReview.$error">
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <label style="width: 128px">Real-time review</label>
+                <md-checkbox ng-model="ctrl.model.realTimeReviewBool">
+                </md-checkbox>
+                <md-input-container class="md-block" flex-gt-sm="55" ng-if="ctrl.model.realTimeReviewBool">
+                    <label>Address of OneNet document</label>
+                    <textarea ng-model="ctrl.model.realTimeReview" name="realTimeReview" required></textarea>
+                    <div ng-messages="form.realTimeReview.$error">
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <label>Representation on Humanitarian Country Team (HCT)</label>
+                <md-tooltip md-direction="bottom">Because of Cluster Lead Agency status</md-tooltip>
+                <md-checkbox ng-model="ctrl.model.representationOnHCTBool">
+                </md-checkbox>
+                <label>Education cluster or working group activated</label>
+                <md-checkbox ng-model="ctrl.model.educationClusterBool">
+                </md-checkbox>
+                <label>SC Education Cluster staff in place</label>
+                <md-checkbox ng-model="ctrl.model.staffingEducationClusterBool">
+                </md-checkbox>
+            </div>
+            <div layout-gt-md="row" layout-padding>
+                <label>SC co-leading Education Cluster or working group</label>
+                <md-checkbox ng-model="ctrl.model.sciLeadingEducationClusterBool">
+                </md-checkbox>
+                <md-input-container class="md-block" flex-gt-sm="50" ng-if="ctrl.model.sciLeadingEducationClusterBool">
+                    <label>% time dedicated to the cluster</label>
+                    <input type="number" ng-model="ctrl.model.percentTimeToEducationCluster" name="percentTimeToEducationCluster" max="100"></input>
+                    <div ng-messages="form.percentTimeToEducationCluster.$error">
+                        <div ng-message="max">That's over 100%</div>
+                    </div>
+                </md-input-container>
+            </div>
+        </accordion>
+
+        <accordion heading="Sectors">
+            <div layout-gt-md="row" layout-padding>
+                <label style="width: 128px">Child protection</label>
+                <md-checkbox ng-model="ctrl.model.childProtectionBool">
+                </md-checkbox>
+                <md-input-container class="md-block" flex-gt-sm="40" ng-if="ctrl.model.childProtectionBool">
+                    <label>Backstop</label>
+                    <md-tooltip md-direction="bottom">Your Child protection response backstop's email address. If you do not have a backstop but require one
+                        please put vacant. If you do not have and need a backstop please put n/a.</md-tooltip>
+                    <textarea required ng-model="ctrl.model.childProtectionBackstop" name="childProtectionBackstop" md-maxlength="200"></textarea>
+                    <div ng-messages="form.childProtectionBackstop.$error">
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50" ng-if="ctrl.model.childProtectionBool">
+                    <label>Summary of response to date and achievements since last sitrep</label>
+                    <md-tooltip md-direction="bottom">Provide a summary of the Child Protection response sharing the total reach of the sector against the
+                        target. Highlight the achievements and reach figures of the top 3 activities since the start of the
+                        response, and the percentage of that reach since the last reporting period.</md-tooltip>
+                    <textarea ng-model="ctrl.model.childProtectionSummary" name="childProtectionSummary" md-maxlength="500" required></textarea>
+                    <div ng-messages="form.childProtectionSummary.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="md-maxlength">That's too long</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <label style="width: 128px">Education</label>
+                <md-checkbox ng-model="ctrl.model.educationBool">
+                </md-checkbox>
+                <md-input-container class="md-block" flex-gt-sm="40" ng-if="ctrl.model.educationBool">
+                    <label>Backstop</label>
+                    <md-tooltip md-direction="bottom">Your Education response backstop's email address. If you do not have a backstop but require one please
+                        put vacant. If you do not have and need a backstop please put n/a.</md-tooltip>
+                    <textarea required ng-model="ctrl.model.educationBackstop" name="educationBackstop" md-maxlength="200"></textarea>
+                    <div ng-messages="form.educationBackstop.$error">
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50" ng-if="ctrl.model.educationBool">
+                    <label>Summary of response to date and achievements since last sitrep</label>
+                    <md-tooltip md-direction="bottom">Provide a summary of the Education response sharing the total reach of the sector against the target.
+                        Highlight the achievements and reach figures of the top 3 activities since the start of the response,
+                        and the percentage of that reach since the last reporting period. </md-tooltip>
+                    <textarea ng-model="ctrl.model.educationSummary" name="educationSummary" md-maxlength="500" required></textarea>
+                    <div ng-messages="form.educationSummary.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="md-maxlength">That's too long</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <label style="width: 128px">FSL</label>
+                <md-checkbox ng-model="ctrl.model.FSLBool">
+                </md-checkbox>
+                <md-input-container class="md-block" flex-gt-sm="40" ng-if="ctrl.model.FSLBool">
+                    <label>Backstop</label>
+                    <md-tooltip md-direction="bottom">Your FSL response backstop's email address. If you do not have a backstop but require one please put
+                        vacant. If you do not have and need a backstop please put n/a.</md-tooltip>
+                    <textarea ng-model="ctrl.model.fSLBackstop" name="fSLBackstop" md-maxlength="200" required></textarea>
+                    <div ng-messages="form.fSLBackstop.$error">
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50" ng-if="ctrl.model.FSLBool">
+                    <label>Summary of response to date and achievements since last sitrep</label>
+                    <md-tooltip md-direction="bottom">Provide a summary of the FSL response sharing the total reach of the sector against the target. Highlight
+                        the achievements and reach figures of the top 3 activities since the start of the response, and the
+                        percentage of that reach since the last reporting period.</md-tooltip>
+                    <textarea ng-model="ctrl.model.fSLSummary" name="fSLSummary" md-maxlength="500" required></textarea>
+                    <div ng-messages="form.fSLSummary.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="md-maxlength">That's too long</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <label style="width: 128px">WASH</label>
+                <md-checkbox ng-model="ctrl.model.wASHBool">
+                </md-checkbox>
+                <md-input-container class="md-block" flex-gt-sm="40" ng-if="ctrl.model.wASHBool">
+                    <label>Backstop</label>
+                    <md-tooltip md-direction="bottom">Your WASH response backstop's email address. If you do not have a backstop but require one please put
+                        vacant. If you do not have and need a backstop please put n/a.</md-tooltip>
+                    <textarea ng-model="ctrl.model.wASHBackstop" name="wASHBackstop" md-maxlength="200" required></textarea>
+                    <div ng-messages="form.wASHBackstop.$error">
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50" ng-if="ctrl.model.wASHBool">
+                    <label>Summary of response to date and achievements since last sitrep</label>
+                    <md-tooltip md-direction="bottom">Provide a summary of the WASH response sharing the total reach of the sector against the target. Highlight
+                        the achievements and reach figures of the top 3 activities since the start of the response, and the
+                        percentage of that reach since the last reporting period. </md-tooltip>
+                    <textarea ng-model="ctrl.model.wASHSummary" name="wASHSummary" md-maxlength="500" required></textarea>
+                    <div ng-messages="form.wASHSummary.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="md-maxlength">That's too long</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <label style="width: 128px">MEAL</label>
+                <md-checkbox ng-model="ctrl.model.mEALBool">
+                </md-checkbox>
+                <md-input-container class="md-block" flex-gt-sm="40" ng-if="ctrl.model.mEALBool">
+                    <label>Backstop</label>
+                    <md-tooltip md-direction="bottom">Your MEAL response backstop's email address. If you do not have a backstop but
+                        require one please put
+                        vacant. If you do not have and need a backstop please put n/a.</md-tooltip>
+                    <textarea ng-model="ctrl.model.mEALBackstop" name="mEALBackstop" md-maxlength="200" required></textarea>
+                    <div ng-messages="form.mEALBackstop.$error">
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50" ng-if="ctrl.model.mEALBool">
+                    <label>Summary of response to date and achievements since last sitrep</label>
+                    <md-tooltip md-direction="bottom">Provide a summary of the MEAL response sharing the total reach of the sector
+                        against the target. Highlight
+                        the achievements and reach figures of the top 3 activities since the start of the response, and the
+                        percentage of that reach since the last reporting period. </md-tooltip>
+                    <textarea ng-model="ctrl.model.mEALSummary" name="mEALSummary" md-maxlength="500" required></textarea>
+                    <div ng-messages="form.mEALSummary.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="md-maxlength">That's too long</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <label style="width: 128px">Shelter</label>
+                <md-checkbox ng-model="ctrl.model.shelterBool">
+                </md-checkbox>
+                <md-input-container class="md-block" flex-gt-sm="40" ng-if="ctrl.model.shelterBool">
+                    <label>Backstop</label>
+                    <md-tooltip md-direction="bottom">Your Shelter response backstop's email address. If you do not have a backstop but require one please
+                        put vacant. If you do not have and need a backstop please put n/a.</md-tooltip>
+                    <textarea ng-model="ctrl.model.shelterBackstop" name="shelterBackstop" md-maxlength="200" required></textarea>
+                    <div ng-messages="form.shelterBackstop.$error">
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50" ng-if="ctrl.model.shelterBool">
+                    <label>Summary of response to date and achievements since last sitrep</label>
+                    <md-tooltip md-direction="bottom">Provide a summary of the Shelter/NFI response sharing the total reach of the sector against the target.
+                        Highlight the achievements and reach figures of the top 3 activities since the start of the response,
+                        and the percentage of that reach since the last reporting period.</md-tooltip>
+                    <textarea ng-model="ctrl.model.shelterSummary" name="shelterSummary" md-maxlength="500" required></textarea>
+                    <div ng-messages="form.shelterSummary.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="md-maxlength">That's too long</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <label style="width: 128px">Health</label>
+                <md-checkbox ng-model="ctrl.model.healthBool">
+                </md-checkbox>
+                <md-input-container class="md-block" flex-gt-sm="40" ng-if="ctrl.model.healthBool">
+                    <label>Backstop</label>
+                    <md-tooltip md-direction="bottom">Your Health response backstop's email address. If you do not have a backstop but require one please put
+                        vacant. If you do not have and need a backstop please put n/a.</md-tooltip>
+                    <textarea ng-model="ctrl.model.healthBackstop" name="healthBackstop" md-maxlength="200" required></textarea>
+                    <div ng-messages="form.healthBackstop.$error">
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50" ng-if="ctrl.model.healthBool">
+                    <label>Summary of response to date and achievements since last sitrep</label>
+                    <md-tooltip md-direction="right">Provide a summary of the Health response sharing the total reach of the sector against the target. Highlight
+                        the achievements and reach figures of the top 3 activities since the start of the response, and the
+                        percentage of that reach since the last reporting period. </md-tooltip>
+                    <textarea ng-model="ctrl.model.healthSummary" name="healthSummary" md-maxlength="500" required></textarea>
+                    <div ng-messages="form.healthSummary.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="md-maxlength">That's too long</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <label style="width: 128px">EHU Deployed</label>
+                <md-checkbox ng-model="ctrl.model.eHUDeployed">
+                </md-checkbox>
+            </div>
+            <div style="margin-top: -75px; margin-left: 175px" ng-hide="!ctrl.model.eHUDeployed">
+                <div layout-gt-md="row">
+                    <div class="md-block" style="margin-top: -47px;" flex-gt-sm="25">
+                        <h5 style="font-weight: normal !important">EHU Deployed from</h5>
+                        <md-datepicker ng-model="ctrl.model.eHUDeployedDate" md-placeholder="Enter date"></md-datepicker>
+                    </div>
+                </div>
+
+                <div layout-gt-md="row">
+                    <div class="md-block" flex-gt-sm="25">
+                        <h5 style="font-weight: normal !important">EHU Deployed until</h5>
+                        <md-datepicker ng-model="ctrl.model.eHUDeployedUntilDate" md-placeholder="Enter date"></md-datepicker>
+                    </div>
+                </div>
+            </div>
+            <div layout-gt-md="row" layout-padding>
+                <label style="width: 128px">Nutrition</label>
+                <md-checkbox ng-model="ctrl.model.nutritionBool">
+                </md-checkbox>
+                <md-input-container class="md-block" flex-gt-sm="40" ng-if="ctrl.model.nutritionBool">
+                    <label>Backstop</label>
+                    <md-tooltip md-direction="bottom">Your Nutrition response backstop's email address. If you do not have a backstop but require one please put 'vacant'. 
+                        If you do not have and need a backstop, please put n/a.
+                            </md-tooltip>
+                    <textarea ng-model="ctrl.model.nutritionBackstop" name="nutritionBackstop" md-maxlength="200" required></textarea>
+                    <div ng-messages="form.nutritionBackstop.$error">
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50" ng-if="ctrl.model.nutritionBool">
+                    <label>Summary of response to date and achievements since last sitrep</label>
+                    <md-tooltip md-direction="right">Provide a summary of the nutrition response sharing the total reach of the sector against the target. 
+                        Highlight the achievements and reach figures of the top 3 activities since the start of the response, and the percentage of
+                         that reach since the last reporting period.</md-tooltip>
+                    <textarea ng-model="ctrl.model.nutritionSummary" name="nutritionSummary" md-maxlength="500" required></textarea>
+                    <div ng-messages="form.nutritionSummary.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="md-maxlength">That's too long</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label>Link to output tracker</label>
+                    <textarea ng-model="ctrl.model.outputTracker" name="outputTracker"></textarea>
+                </md-input-container>
+            </div>
+
+
+        </accordion>
+
+        <accordion heading="HR (For Internal Use Only)">
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50"  ng-If="ctrl.nationalStaffNumber==''">
+                    <label ng-If="ctrl.nationalStaffNumber==''"># of national response staff</label>
+                    <input ng-If="ctrl.nationalStaffNumber==''" type="number" max="9999999999" ng-model="ctrl.model.nationalStaffNumber" name="nationalStaffNumber"  disabled></input>
+                    <div ng-messages="form.nationalStaffNumber.$error">
+                        <div ng-message="max">That's too high</div>
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="50"  ng-If="ctrl.internationalStaffNumber==''">
+                    <label># of international staff</label>
+                    <input type="number" max="9999999999" ng-model="ctrl.model.internationalStaffNumber" name="internationalStaffNumber"  disabled></input>
+                    <div ng-messages="form.internationalStaffNumber.$error">
+                        <div ng-message="max">That's too high</div>
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label># of Male International Staff</label>
+                    <input type="number" max="9999999999" ng-model="ctrl.model.maleInternationalStaffNumber" name="maleInternationalStaffNumber"
+                        ></input>
+                    <div ng-messages="form.maleInternationalStaffNumber.$error">
+                        <div ng-message="max">That's too high</div>
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label># of Female International Staff</label>
+                    <input type="number" max="9999999999" ng-model="ctrl.model.femaleInternationalStaffNumber"
+                        name="femaleInternationalStaffNumber" ></input>
+                    <div ng-messages="form.femaleInternationalStaffNumber.$error">
+                        <div ng-message="max">That's too high</div>
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label># of Male National Staff</label>
+                    <input type="number" max="9999999999" ng-model="ctrl.model.maleNationalStaffNumber" name="maleInternationalStaffNumber"
+                        ></input>
+                    <div ng-messages="form.maleInternationalStaffNumber.$error">
+                        <div ng-message="max">That's too high</div>
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label># of Female National Staff</label>
+                    <input type="number" max="9999999999" ng-model="ctrl.model.femaleNationalStaffNumber" name="femaleInternationalStaffNumber"
+                        ></input>
+                    <div ng-messages="form.femaleInternationalStaffNumber.$error">
+                        <div ng-message="max">That's too high</div>
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label># of Male SLT/SMT Staff</label>
+                    <input type="number" max="9999999999" ng-model="ctrl.model.maleSLTSMTStaffNumber" name="maleSLTSMTStaffNumber"
+                        ></input>
+                    <div ng-messages="form.maleSLTSMTStaffNumber.$error">
+                        <div ng-message="max">That's too high</div>
+                        
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label># of Female SLT/SMT Staff</label>
+                    <input type="number" max="9999999999" ng-model="ctrl.model.femaleSLTSMTStaffNumber"
+                        name="femaleSLTSMTStaffNumber" ></input>
+                    <div ng-messages="form.femaleSLTSMTStaffNumber.$error">
+                        <div ng-message="max">That's too high</div>
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <!-- 
+             <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label>Link to deployment tracker</label>
+                    <textarea ng-model="ctrl.model.deploymentTrackerLink" name="deploymentTrackerLink"></textarea>
+                </md-input-container>
+            </div>               
+            -->
+
+        </accordion>
+
+        <accordion heading="Safety and security, challenges and mitigations (For Internal Use Only)">
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label>Please provide an overview of the S&amp;S context, including details of security incidents, since the
+                        last SitRep</label>
+                    <textarea ng-model="ctrl.model.securityContext" name="securityContext" md-maxlength="500" required></textarea>
+                    <div ng-messages="form.securityContext.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="md-maxlength">That's too long</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label>What immediate S&amp;S challenges are predicted?</label>
+                    <textarea ng-model="ctrl.model.securityChallenges" name="securityChallenges" md-maxlength="500" required></textarea>
+                    <div ng-messages="form.securityChallenges.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="md-maxlength">That's too long</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label>How will those challenges be managed?</label>
+                    <textarea ng-model="ctrl.model.securityManagement" name="securityManagement" md-maxlength="500" required></textarea>
+                    <div ng-messages="form.securityManagement.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="md-maxlength">That's too long</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+        </accordion>
+
+        <accordion heading="Child & Adult Safeguarding (For Internal Use Only)">
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label>% of staff with Child & Adult Safeguarding training</label>
+                    <input type="number" ng-model="ctrl.model.staffChildSafegaurding" name="staffChildSafegaurding" max="100"></input>
+                    <div ng-messages="form.staffChildSafegaurding.$error">
+                        <div ng-message="max">That's over 100%</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label>Child & Adult Safeguarding focal point</label>
+                    <md-tooltip>The response CSG focal point's email address.</md-tooltip>
+                    <textarea ng-model="ctrl.model.safegaurdingFocalPoint" name="safegaurdingFocalPoint" md-maxlength="200" required></textarea>
+                    <div ng-messages="form.safegaurdingFocalPoint.$error">
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label>Key safeguarding risks to children and adults</label>
+                    <textarea ng-model="ctrl.model.safegaurdingRisks" name="safegaurdingRisks" md-maxlength="1000" required></textarea>
+                    <div ng-messages="form.safegaurdingRisks.$error">
+                        <div ng-message="md-maxlength">That's too long</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+        </accordion>
+
+                    <accordion heading="Gender & Gender and Gender-based Violence (GBV) Minimum Actions(For Internal Use Only)">
+                        <div layout-gt-md="row" layout-padding>
+                            <div layout-gt-md="column" flex-gt-sm="40">
+                                <label>All data is disaggregated by age and sex, and analysed regularly to identify who is included and
+                                    excluded
+                                    from our programmes</label>
+                    
+                            </div>
+                            <div layout-gt-md="column" flex-gt-sm="10">
+                                <md-checkbox ng-true-value="'Yes'" ng-false-value="'No'"
+                                    ng-model="ctrl.model.dataIsDisaggregatedByAgeAndSex">
+                                </md-checkbox>
+                            </div>
+                            <div layout-gt-md="column" flex-gt-sm="30">
+                                <label>All Technical Advisors are aware of, and consistently using, the (Humanitarian) Gender Equality
+                                    Marker
+                                    in programme design. Please select which sectors.</label>
+                    
+                    
+                            </div>
+                            <div layout-gt-md="column" flex-gt-sm="20">
+                                <md-input-container>
+                                    <md-select ng-model="ctrl.model.advisorsAreAwareOfGenderEquality"
+                                        ng-model-options="{trackBy: '$value[0]'}"  multiple>
+                    
+                                        <md-optgroup label="">
+                                            <md-option ng-value="Audit" ng-repeat="Audit in ctrl.technicalAdvisorsAreAware">
+                                                {{Audit}}
+                                            </md-option>
+                                        </md-optgroup>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                    
+                        </div>
+                        <div layout-gt-md="row" layout-padding>
+                            <div layout-gt-md="column" flex-gt-sm="40">
+                                <label>All consultation with communities is sex-segregated (conducted separately with girls, boys, women and
+                                    men).
+                                    If no, please explain the barriers faced.</label>
+                    
+                            </div>
+                            <div layout-gt-md="column" flex-gt-sm="10">
+                                <md-checkbox ng-true-value="'Yes'" ng-false-value="'No'"
+                                    ng-model="ctrl.model.consultationWithCommunitiesIsSex">
+                                </md-checkbox>
+                            </div>
+                    
+                            <div layout-gt-md="column" flex-gt-sm="40">
+                                <label>All consultation with communities is conducted by a facilitator of the same sex as the
+                                    participant(s).
+                                    If no, please explain the barriers faced.</label>
+                    
+                    
+                            </div>
+                            <div layout-gt-md="column" flex-gt-sm="10">
+                                <md-checkbox ng-true-value="'Yes'" ng-false-value="'No'"
+                                    ng-model="ctrl.model.facilitatorOfTheSameSexAsThePart"></md-checkbox>
+                            </div>
+                        </div>
+                    
+                    
+                        <div layout-gt-md="row" layout-padding>
+                            <div layout-gt-md="column" flex-gt-sm="40">
+                                <label>A Safety Audit and Assessment is regularly (at least once each year) conducted to identify and
+                                    mitigate GBV risks. If
+                                    yes, please indicate frequency</label>
+                    
+                            </div>
+                            <div layout-gt-md="column" flex-gt-sm="10">
+                                <md-input-container>
+                                    <md-select ng-model="ctrl.model.safetyAuditAndAssessment" md-container-class="selectdemoSelectHeader"
+                                        multiple>
+                    
+                                        <md-optgroup label="">
+                                            <md-option ng-value="Audit" ng-repeat="Audit in ctrl.auditAndAssessment">
+                                                {{Audit}}
+                                            </md-option>
+                                        </md-optgroup>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                    
+                    
+                    
+                    
+                            <div layout-gt-md="column" flex-gt-sm="40">
+                                <label>A Gender Analysis has been conducted for target areas and is informing programming. If no, please
+                                    explain the barriers
+                                    faced</label>
+                                <p></p>
+                                <md-input-container class="md-block" flex-gt-sm="38" ng-if="ctrl.model.genderAnalysisBool=='No'">
+                                    <label>If no, please explain the barriers faced.</label>
+                                    <md-tooltip md-direction="bottom">A Gender Analysis has been conducted for target areas and is informing
+                                        programming</md-tooltip>
+                                    <textarea ng-model="ctrl.model.genderAnalysis" name="genderAnalysis" md-maxlength="200"
+                                        required></textarea>
+                                    <div ng-messages="form.genderAnalysis.$error">
+                                        <div ng-message="required">This is required</div>
+                                    </div>
+                                </md-input-container>
+                    
+                            </div>
+                            <div layout-gt-md="column" flex-gt-sm="10">
+                                <md-checkbox ng-true-value="'Yes'" ng-false-value="'No'" ng-model="ctrl.model.genderAnalysisBool">
+                                </md-checkbox>
+                            </div>
+                        </div>
+                    
+                        <div layout-gt-md="row" layout-padding>
+                            <div layout-gt-md="column" flex-gt-sm="40">
+                                <label>[Only Prioritised Responses] A response-wide Gender Action Plan has been developed and is being
+                                    implemented</label>
+                    
+                            </div>
+                            <div layout-gt-md="column" flex-gt-sm="10">
+                                <md-checkbox ng-true-value="'Yes'" ng-false-value="'No'" ng-model="ctrl.model.responseWideGenderAction">
+                                </md-checkbox>
+                            </div>
+                    
+                            <div layout-gt-md="column" flex-gt-sm="40">
+                                <label>Girl-only safe spaces have been established (e.g Girls' Clubs and Girl Friendly Spaces), informed by
+                                    consultation with
+                                    girls. </label>
+                                <p></p>
+                                <md-input-container class="md-block" flex-gt-sm="38" ng-if="ctrl.model.girlOnlySafeSpacesBool">
+                                    <label>If yes, please specify.</label>
+                                    <md-tooltip md-direction="bottom">Girl-only safe spaces have been established (e.g Girls Clubs and Girl
+                                        Friendly Spaces), informed by consultation with
+                                        girls. </md-tooltip>
+                                    <textarea ng-model="ctrl.model.girlOnlySafeSpaces" name="girlOnlySafeSpaces" md-maxlength="300"
+                                        required></textarea>
+                                    <div ng-messages="form.girlOnlySafeSpaces.$error">
+                                        <div ng-message="required">This is required</div>
+                                    </div>
+                                </md-input-container>
+                    
+                            </div>
+                            <div layout-gt-md="column" flex-gt-sm="10">
+                                <md-checkbox ng-model="ctrl.model.girlOnlySafeSpacesBool"></md-checkbox>
+                            </div>
+                        </div>
+                    
+                        <div layout-gt-md="row" layout-padding>
+                            <div layout-gt-md="column" flex-gt-sm="40">
+                                <label>Dignity kits are regularly distributed to women and girls, informed by consultation with women and
+                                    girls. If yes, please
+                                    specify through which sector.</label>
+                    
+                                <md-input-container class="md-block" flex-gt-sm="38"
+                                    ng-if="ctrl.model.dignityKitsAreRegularlyDistributBool=='Yes'">
+                                    <md-select ng-model="ctrl.model.dignityKitsAreRegularlyDistribut"
+                                        md-container-class="selectdemoSelectHeader" multiple>
+                    
+                                        <md-optgroup label="">
+                                            <md-option ng-value="dignity" ng-repeat="dignity in ctrl.regularlyDistribut">
+                                                {{dignity}}
+                                            </md-option>
+                                        </md-optgroup>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-md="column" flex-gt-sm="10">
+                                <md-checkbox ng-true-value="'Yes'" ng-false-value="'No'"
+                                    ng-model="ctrl.model.dignityKitsAreRegularlyDistributBool">
+                                </md-checkbox>
+                    
+                            </div>
+                    
+                    
+                            <div layout-gt-md="column" flex-gt-sm="30">
+                                <label>Women & girls are equally and meaningfully represented in all community structures. For mixed-sex
+                                    community structures,
+                                    there is a 50:50 balance of females and males; for single-sex community structures, there is a
+                                    female-only and male-only
+                                    structure.</label>
+                    
+                            </div>
+                            <div layout-gt-md="column" flex-gt-sm="20">
+                                <md-checkbox ng-true-value="'Yes'" ng-false-value="'No'"
+                                    ng-model="ctrl.model.womenGirlsEquallyMeaningfullyRep"></md-checkbox>
+                            </div>
+                        </div>
+                    
+                        <div layout-gt-md="row" layout-padding>
+                            <div layout-gt-md="column" flex-gt-sm="30">
+                                <label>Frontline staff are aware of inter-agency GBV referral pathways and how to receive disclosures and
+                                    make safe and ethical
+                                    referrals for GBV survivors. If yes, please specify which sector has received training.</label>
+                    
+                        </div>
+                    
+                    
+                        <div  layout-gt-md="column" flex-gt-sm="20">
+                                <md-checkbox ng-true-value="'Yes'" ng-false-value="'No'"
+                                    ng-model="ctrl.model.frontlineStaffAreAwareOfGBVBool">
+                                </md-checkbox>
+                                <P></P>
+                                <md-input-container ng-If="ctrl.model.frontlineStaffAreAwareOfGBVBool=='Yes'">
+                                    <md-select ng-model="ctrl.model.frontlineStaffAreAwareOfGBV" md-container-class="selectdemoSelectHeader"
+                                        multiple>
+                    
+                                        <md-optgroup label="">
+                                            <md-option ng-value="staffGBV" ng-repeat="staffGBV in ctrl.staffAreAwareOfGBV">
+                                                {{staffGBV}}
+                                            </md-option>
+                                        </md-optgroup>
+                                    </md-select>
+                                </md-input-container>
+                        </div>
+                    
+                    
+                    
+                        <div layout-gt-md="column" flex-gt-sm="40">
+                            <label>All staff and communities are aware of the PSEA Policy and the reporting process. If yes, please list the
+                                approaches for
+                                communicating with communities.</label>
+                            <p></p>
+                            <md-input-container class="md-block" flex-gt-sm="38"
+                                ng-if="ctrl.model.staffCommunitiesAreAwareOfPSEAPoBool=='Yes'">
+                                <label>If yes, please specify.</label>
+                                <md-tooltip md-direction="bottom">Girl-only safe spaces have been established (e.g Girls Clubs and Girl
+                                    Friendly
+                                    Spaces), informed by consultation with
+                                    girls. </md-tooltip>
+                                <textarea ng-model="ctrl.model.staffCommunitiesAreAwareOfPSEAPo" name="staffCommunitiesAreAwareOfPSEAPo"
+                                    md-maxlength="200" required></textarea>
+                                <div ng-messages="form.staffCommunitiesAreAwareOfPSEAPo.$error">
+                                    <div ng-message="required">This is required</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-md="column" flex-gt-sm="10">
+                            <md-checkbox ng-true-value="'Yes'" ng-false-value="'No'"
+                                ng-model="ctrl.model.staffCommunitiesAreAwareOfPSEAPoBool"></md-checkbox>
+                        </div>
+                        </div>
+                    
+                        <div layout-gt-md="row" layout-padding>
+                            <div layout-gt-md="column" flex-gt-sm="40">
+                                <label>Are there targeted activities to protect and empower girls? If yes, please briefly list what these
+                                    are, eg Girl Friendly
+                                    Spaces.</label>
+                                <p></p>
+                                <md-input-container class="md-block" flex-gt-sm="38"
+                                    ng-if="ctrl.model.targetedActivitiesToProtectEmpowBool=='Yes'">
+                                    <label>If yes, please specify.</label>
+                                    <md-tooltip md-direction="bottom">Girl-only safe spaces have been established (e.g Girls Clubs and Girl
+                                        Friendly
+                                        Spaces), informed by consultation with
+                                        girls. </md-tooltip>
+                                    <textarea ng-model="ctrl.model.targetedActivitiesToProtectEmpow" name="targetedActivitiesToProtectEmpow"
+                                        md-maxlength="200" required></textarea>
+                                    <div ng-messages="form.targetedActivitiesToProtectEmpow.$error">
+                                        <div ng-message="required">This is required</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-md="column" flex-gt-sm="10">
+                                <md-checkbox ng-true-value="'Yes'" ng-false-value="'No'"
+                                    ng-model="ctrl.model.targetedActivitiesToProtectEmpowBool">
+                                </md-checkbox>
+                            </div>
+                            <div layout-gt-md="column" flex-gt-sm="40">
+                                <label>Feedback & reporting mechanisms are accessible to women and girls (inc. those who are illiterate,
+                                    homebound or lack
+                                    access to phones/credit), with door-to-door visits conducted by female staff to consult women & girls.
+                                    Please indicate
+                                    what adaptations have been made to ensure safe and equal access by women and girls
+                                </label>
+                            </div>
+                            <div layout-gt-md="column" flex-gt-sm="10">
+                                <md-checkbox ng-true-value="'Yes'" ng-false-value="'No'" ng-model="ctrl.model.reportingMechanisms">
+                                </md-checkbox>
+                            </div>
+                        </div>
+                    
+                    
+                    </accordion>
+        <accordion heading="Advocacy, Media and Comms">
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label>Link to Communications Pack</label>
+                    <md-tooltip md-direction="bottom">Link to latest Communications Pack or to latest information materials</md-tooltip>
+                    <textarea ng-model="ctrl.model.commsPack" name="commsPack"></textarea>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label>Link to Content Hub Collection</label>
+                    <md-tooltip md-direction="bottom">Link to latest multimedia assets</md-tooltip>
+                    <textarea ng-model="ctrl.model.contentHubLink" name="contentHubLink"></textarea>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label>Spokespeople</label>
+                    <textarea ng-model="ctrl.model.spokespeople" name="spokespeople" required></textarea>
+                    <div ng-messages="form.spokespeople.$error">
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label>Link to latest Media</label>
+                    <md-tooltip md-direction="bottom">Link to latest press release or media coverage</md-tooltip>
+                    <textarea ng-model="ctrl.model.latestMediaLink" name="latestMediaLink"></textarea>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label>Advocacy update (For Internal Use Only)</label>
+                    <md-tooltip md-direction="bottom">Share upcoming advocacy opportunities, previous actions/achievements.</md-tooltip>
+                    <textarea ng-model="ctrl.model.advocacyActions" name="advocacyActions" md-maxlength="500" required></textarea>
+                    <div ng-messages="form.advocacyActions.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="md-maxlength">That's too long</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label>Media and Content Update</label>
+                    <md-tooltip md-direction="bottom">Update on latest press releases, media coverage and flag forthcoming content</md-tooltip>
+                    <textarea ng-model="ctrl.model.mediaCoverage" name="mediaCoverage" md-maxlength="500" required></textarea>
+                    <div ng-messages="form.mediaCoverage.$error">
+                        <div ng-message="required">This is required</div>
+                        <div ng-message="md-maxlength">That's too long</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+        </accordion>
+
+        <accordion heading="Emergency supply chain (For Internal Use Only)">
+            <div layout-gt-md="row" layout-padding>
+                <label>Do you have prepositioned stock in country?</label>
+                <md-checkbox ng-model="ctrl.model.prepositionedStock">
+                </md-checkbox>
+                <label>Are you planning to use it for this response?</label>
+                <md-checkbox ng-model="ctrl.model.forThisResponse">
+            </div>
+
+            <div layout-gt-md="row" layout-padding>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label>Planned procurement on this response (in USD)</label>
+                    <input type="number" ng-model="ctrl.model.plannedProcurement" name="plannedProcurement" max="9999999999"></input>
+                    <div ng-messages="form.plannedProcurement.$error">
+                        <div ng-message="max">That's too high</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="50">
+                    <label>Procurement spend to date (in USD)</label>
+                    <input type="number" ng-model="ctrl.model.procurementSpend" name="procurementSpend" max="9999999999"></input>
+                    <div ng-messages="form.procurementSpend.$error">
+                        <div ng-message="max">That's too high</div>
+                    </div>
+                </md-input-container>
+            </div>
+        </accordion>
+
+
+
+
+    </ng-form>
+</md-content>

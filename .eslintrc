@@ -1,0 +1,21 @@
+{
+	"extends": "eslint:recommended",
+"parser": "babel-eslint",
+	"globals": {
+		"angular": true
+	},
+
+	"env": {
+		"jquery": true,
+		"browser": true,
+		"es6": true
+	},
+    "ecmaFeatures": {
+        "modules": true
+    },
+	"rules": {
+		"no-unused-vars": [2, {"vars": "all", "args": "none"}],
+		"no-console": 0,
+		"no-restricted-modules": 1
+	}
+}

@@ -1,0 +1,651 @@
+<md-content ng-cloak class="md-inline-form">
+    <div layout-gt-sm="row" layout-align="space-between center">
+        <h1>&nbsp;{{ctrl.main.code}} - {{ctrl.main.country}} - {{ctrl.main.region}}&nbsp;</h1>
+        <h3>&nbsp;{{ctrl.main.description}}</h3>
+
+        <div layout="row">
+            <md-button class="md-raised md-primary" aria-span="Convert to Draft" ng-if="ctrl.main.convertToDraft" ng-hide="ctrl.main.isRequestProcessing"
+                ng-click="ctrl.main.revertToDraft(ctrl.main.model)">
+                Convert to Draft
+            </md-button>
+            <md-button class="md-raised md-primary" aria-span="Reject" ng-if="ctrl.main.reject === true" ng-hide="ctrl.main.isRequestProcessing"
+                ng-click="ctrl.main.rejectReport(ctrl.main.model)">
+                Reject
+            </md-button>
+            <md-button class="md-raised md-primary" aria-span="Approve" ng-if="ctrl.main.approve === true" ng-hide="ctrl.main.isRequestProcessing"
+                ng-click="ctrl.main.approveReport(ctrl.main.model)">
+                Approve
+            </md-button>
+            <md-button class="md-raised md-primary" aria-span="refreshAugmentedData" ng-if="ctrl.main.approve === true" ng-hide="ctrl.main.isRequestProcessing"
+                ng-click="ctrl.main.refreshAugmentedData(ctrl.main.model)">
+                <md-tooltip md-direction="bottom">Only use if you have checked the financial data on the portal and you need to refresh it</md-tooltip>
+                Refresh external data
+            </md-button>
+            <md-progress-circular md-mode="indeterminate" class="md-primary md-hue-3" ng-show="ctrl.main.isRequestProcessing" md-diameter="70"></md-progress-circular>
+        </div>
+    </div>
+
+    <div class="well">
+        <div layout-gt-md="row" layout-padding>
+            <h4>General Info</h4>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Sitrep date: </span>{{ctrl.main.model.sitrepDate}}</div>
+            <div>
+                <span class="bold">Next sitrep date: </span>{{ctrl.main.model.nextSitrepDate}}</div>
+            <div>
+                <span class="bold">Sitrep number:</span> {{ctrl.main.model.sitrepNumber}}</div>
+        </div>
+             <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">General Context External: </span>{{ctrl.main.model.generalContextExternal}}</div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Response Update Internal: </span>{{ctrl.main.model.responseUpdateInternal}}</div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Response Update External:</span> {{ctrl.main.model.responseUpdateExternal}}</div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Challenges Internal: </span>{{ctrl.main.model.challengesInternal}}</div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Ops Backstop: </span>{{ctrl.main.model.opsBackstop}}</div>
+        </div>
+        <div layout-gt-md="column" layout-padding>
+            <div><span class="bold">Response image signed off for external use: </span></div>
+            <attachments  flex="40" ng-model="ctrl.main.model.uploadedAttachments" options="ctrl.main.attachmentsOptions" flex="100" class="attachment-controls"></attachments>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Response image credits: </span>{{ctrl.main.model.responseImageCredits}}</div>
+        </div>
+    </div>
+    <div class="well">
+        <div layout-gt-md="row" layout-padding>
+            <h4>Response strategy</h4>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Response strategy In place?:</span> {{ctrl.main.model.strategyInPlace}}
+            </div>
+            <div>
+                <span class="bold">Response Strategy Period Start:</span> {{ctrl.main.model.strategyPeriodStart}}
+            </div>
+            <div>
+                <span class="bold">Response Strategy Period End:</span> {{ctrl.main.model.strategyPeriodEnd}}
+            </div>
+        </div>
+            <div layout-gt-md="row" layout-padding>
+                <div>
+                    <span class="bold">Response Strategy:</span> {{ctrl.main.model.strategyBool}}
+                </div>
+                <br>
+                <div>
+                    <div layout-gt-md="column" layout-padding>
+                        <div><span class="bold">Address of OneNet Document </span></div>
+                        <a href="{{ctrl.main.model.strategy}}" target="_blank">{{ctrl.main.model.strategy}}</a>
+                        
+                    </div>
+                </div>
+            </div>
+        
+       
+    </div>
+    <div class="well">
+        <div layout-gt-md="row" layout-padding>
+            <h4>Reach figures</h4>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Affected population: </span>{{ctrl.main.model.affectedPopulation}}
+            </div>
+            <div>
+                <span class="bold">Number of children affected: </span>{{ctrl.main.model.affectedChildren}}
+            </div>
+            <div>
+                <span class="bold">New/ Unique beneficiaries reached this month: </span>{{ctrl.main.model.monthUniqueBeneficiaries}}
+            </div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            
+            <div>
+                <span class="bold">Beneficiary Reach Target for strategy period (adults and children): </span>{{ctrl.main.model.strategyTarget}}
+            </div>
+
+            <div>
+                <span class="bold">Children Reach target for strategy period: </span>{{ctrl.main.model.strategyTargetChildren}}
+            </div>
+        </div>
+                <div layout-gt-md="row" layout-padding>
+                    <div>
+                        <span class="bold">Men reached since start of response:</span> {{ctrl.main.model.totalReachSinceStart}}
+                    </div>
+                    <div>
+                        <span class="bold">Women reached since start of response:</span> {{ctrl.main.model.womenReachSinceStart}}
+                    </div>
+                    <div>
+                        <span class="bold">Boys reached since start of response:</span> {{ctrl.main.model.childrenReachedSinceStart}}
+                    </div>
+                    <div>
+                        <span class="bold">Girls reached since start of response:</span> {{ctrl.main.model.totalGirlsReachSinceStart}}
+                    </div>
+                </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Men reach since last sitrep:</span> {{ctrl.main.model.totalReachSinceLastSitrep}}
+            </div>
+            <div>
+                <span class="bold">Women reach since last sitrep:</span> {{ctrl.main.model.womenReachSinceLastSitrep}}
+            </div>
+            <div>
+                <span class="bold">Boys reach since last sitrep:</span> {{ctrl.main.model.childrenReachedSinceLastSitrep}}
+            </div>
+            <div>
+                <span class="bold">Girls reach since last sitrep:</span> {{ctrl.main.model.girlsReachedSinceLastSitrep}}
+            </div>
+        </div>
+        
+       
+         <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Men reached in current year (from Jan to Dec), for current strategy:</span> {{ctrl.main.model.totalReachInCurrentYear}}
+            </div>
+            <div>
+                <span class="bold">Women reached in current year (from Jan to Dec), for current strategy:</span> {{ctrl.main.model.womenReachInCurrentYear}}
+            </div>
+            <div>
+                <span class="bold">Boys reached in current year (from Jan to Dec), for current strategy:</span> {{ctrl.main.model.childrenReachInCurrentYear}}
+            </div>
+            <div>
+                <span class="bold">Girls reached in current year (from Jan to Dec), for current strategy:</span> {{ctrl.main.model.girlsReachInCurrentYear}}
+            </div>
+        </div>
+    </div>
+
+    <div class="well">
+        <div layout-gt-md="row" layout-padding>
+            <h4>Income</h4>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Response strategy target (USD):</span> {{ctrl.main.model.responseStrategyTarget}}</div>
+            <div>
+                <span class="bold">Current seed fund target (USD):</span> {{ctrl.main.model.seedFundsTarget}}</div>
+            <div>
+                <span class="bold">Crisis Modifiers (USD):</span> {{ctrl.main.model.crisisModifiers}}</div>
+            <div>
+                <span class="bold">Date "Current seed fund target" was set:</span> {{ctrl.main.model.seedFundsTargetDate}}</div>
+        </div>
+        <div layout-gt-md="row" layout-padding ng-hide="!ctrl.main.model.nonSciResponses">
+            <div>
+                <span class="bold">Secured income (USD):</span> {{ctrl.main.model.securedIncome}}</div>
+            <div>
+                <span class="bold">New awards in year (USD):</span> {{ctrl.main.model.newAwards}}</div>
+            <div>
+                <span class="bold">Response Pipeline (USD): </span>{{ctrl.main.model.responsePipeline}}</div>
+            <div>
+                <span class="bold">Of which appeal (USD):</span> {{ctrl.main.model.responsePipelineAppeal}}</div>
+        </div>
+        <div layout-gt-md="row" layout-padding ng-hide="!ctrl.main.model.nonSciResponses">
+            <h5>Of which seed funds</h5>
+        </div>
+        <div layout-gt-md="row" layout-padding ng-hide="!ctrl.main.model.nonSciResponses">
+            <div>
+                <span class="bold">Seed funds secured (USD):</span> {{ctrl.main.model.seedFundsSecured}}</div>
+            <div>
+                <span class="bold">Seed funds secured in year (USD):</span> {{ctrl.main.model.seedFundsSecuredYearly}}</div>
+            <div>
+                <span class="bold">CSF (USD): </span>{{ctrl.main.model.cSF}}</div>
+        </div>
+    </div>
+
+    <div class="well">
+        <div layout-gt-md="row" layout-padding>
+            <h4>Deliverables</h4>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Assessment:</span>
+                <a href="{{ctrl.main.model.assessment}}" target="_blank">{{ctrl.main.model.assessment}}</a>
+            </div>
+            <br>
+            <div>
+                <span class="bold">Outline:</span>
+                <a href="{{ctrl.main.model.outline}}" target="_blank">{{ctrl.main.model.outline}}</a>
+            </div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Plan:</span>
+                <a href="{{ctrl.main.model.plan}}" target="_blank">{{ctrl.main.model.plan}}</a>
+            </div>
+            <br>
+           
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Operations Control review:</span>
+                <a href="{{ctrl.main.model.operationsControlReview}}" target="_blank">{{ctrl.main.model.operationsControlReview}}</a>
+            </div>
+            <br>
+            <div>
+                <span class="bold">Real-time review:</span>
+                <a href="{{ctrl.main.model.realTimeReview}}" target="_blank">{{ctrl.main.model.realTimeReview}}</a>
+            </div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Representation on Humanitarian Country Team (HCT): </span>{{ctrl.main.model.representationOnHCTBool}}</div>
+            <br>
+            <div>
+                <span class="bold">Education cluster or working group activated:</span> {{ctrl.main.model.educationClusterBool}}</div>
+            <br>
+            <div>
+                <span class="bold">SC Education Cluster staff in place:</span> {{ctrl.main.model.staffingEducationClusterBool}}</div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">SC co-leading Education Cluster or working group: </span>{{ctrl.main.model.sciLeadingEducationClusterBool}}</div>
+            <br>
+            <div ng-if="sciLeadingEducationClusterBool">
+                <span class="bold">Percentage time dedicated to the education cluster</span> {{ctrl.main.model.percentTimeToEducationCluster}}%</div>
+        </div>
+    </div>
+
+
+    <div class="well">
+        <div layout-gt-md="row" layout-padding>
+            <h4>Sectors</h4>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Child protection backstop:</span>
+                <br>{{ctrl.main.model.childProtectionBackstop}}
+            </div>
+
+            <div>
+                <span class="bold">Summary of response to date and achievements since last sitrep:</span>
+                <br>{{ctrl.main.model.childProtectionSummary}}
+            </div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Education backstop:</span> {{ctrl.main.model.educationBackstop}}</div>
+            <br>
+            <div>
+                <span class="bold">Summary of response to date and achievements since last sitrep:</span>
+                <br>{{ctrl.main.model.educationSummary}}</div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">FSL backstop: </span>{{ctrl.main.model.fSLBackstop}}</div>
+            <br>
+            <div>
+                <span class="bold">Summary of response to date and achievements since last sitrep:</span>
+                <br>{{ctrl.main.model.fSLSummary}}</div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">WASH backstop:</span> {{ctrl.main.model.wASHBackstop}}</div>
+            <br>
+            <div>
+                <span class="bold">Summary of response to date and achievements since last sitrep:</span>
+                <br>{{ctrl.main.model.wASHSummary}}</div>
+        </div>
+
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">MEAL backstop:</span> {{ctrl.main.model.mEALBackstop}}
+            </div>
+            <br>
+            <div>
+                <span class="bold">Summary of response to date and achievements since last sitrep:</span>
+                <br>{{ctrl.main.model.mEALSummary}}
+            </div>
+        </div>
+
+
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Shelter backstop: </span>{{ctrl.main.model.shelterBackstop}}</div>
+            <br>
+            <div>
+                <span class="bold">Summary of response to date and achievements since last sitrep:</span>
+                <br>{{ctrl.main.model.shelterSummary}}</div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Health backstop: </span>{{ctrl.main.model.healthBackstop}}</div>
+            <br>
+            <div>
+                <span class="bold">Summary of response to date and achievements since last sitrep:</span>
+                <br>{{ctrl.main.model.healthSummary}}</div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">EHU deployed from: </span>{{ctrl.main.model.eHUDeployedDate}}</div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">EHU deployed until: </span>{{ctrl.main.model.eHUDeployedUntilDate}}</div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                    <span class="bold">Nutrition backstop: </span>{{ctrl.main.model.nutritionBackstop}}</div>
+            <br>
+            <div>
+                <span class="bold">Summary of response to date and achievements since last sitrep:</span>
+                <br>{{ctrl.main.model.nutritionSummary}}</div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Link to output tracker:</span>
+                <a href="{{ctrl.main.model.outputTracker}}" target="_blank">{{ctrl.main.model.outputTracker}}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="well">
+        <div layout-gt-md="row" layout-padding>
+            <h4>HR</h4>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold"># of national response staff:</span> {{ctrl.main.model.nationalStaffNumber}}</div>
+            <div>
+                <span class="bold"># of international staff:</span> {{ctrl.main.model.internationalStaffNumber}}</div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold"># of male national response staff:</span> {{ctrl.main.model.maleInternationalStaffNumber}}
+            </div>
+            <div>
+                <span class="bold"># of female international staff:</span> {{ctrl.main.model.femaleInternationalStaffNumber}}
+            </div>
+            <div>
+                <span class="bold"># of male national response staff:</span> {{ctrl.main.model.maleNationalStaffNumber}}
+            </div>
+            <div>
+                <span class="bold"># of female international staff:</span> {{ctrl.main.model.femaleNationalStaffNumber}}
+            </div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold"># of male national response staff:</span> {{ctrl.main.model.maleSLTSMTStaffNumber}}
+            </div>
+            <div>
+                <span class="bold"># of female international staff:</span> {{ctrl.main.model.femaleSLTSMTStaffNumber}}
+            </div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Deployment tracker link:</span>
+                <a href="{{ctrl.main.model.deploymentTrackerLink}}" target="_blank">{{ctrl.main.model.deploymentTrackerLink}}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="well">
+        <div layout-gt-md="row" layout-padding>
+            <h4>Safety and security</h4>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold"> Please provide an overview of the S&amp;S context, including details of security incidents, since the last
+                    SitRep:
+                </span>
+                <br>{{ctrl.main.model.securityContext}}</div>
+            <div>
+                <span class="bold">What immediate S&amp;S challenges are predicted?:</span>
+                <br>{{ctrl.main.model.securityChallenges}}</div>
+            <div>
+                <span class="bold">How will those challenges be managed?:</span>
+                <br>{{ctrl.main.model.securityManagement}}</div>
+        </div>
+    </div>
+
+    <div class="well">
+        <div layout-gt-md="row" layout-padding>
+            <h4>Child Safeguarding</h4>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">% of staff with child safeguarding training: </span>{{ctrl.main.model.staffChildSafegaurding}}%</div>
+            <div>
+                <span class="bold">Child safeguarding focal point:</span> {{ctrl.main.model.safegaurdingFocalPoint}}</div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Key safeguarding risks to children:</span>
+                <br>{{ctrl.main.model.safegaurdingRisks}}</div>
+        </div>
+    </div>
+
+    <div class="well">
+        <div layout-gt-md="row" layout-padding>
+            <h4>Advocacy, Media and Comms</h4>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Link to Communications Pack:</span>
+                <a href="{{ctrl.main.model.commsPack}}" target="_blank">{{ctrl.main.model.commsPack}}</a>
+            </div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Link to Content Hub Collection:</span>
+                <a href="{{ctrl.main.model.contentHubLink}}" target="_blank">{{ctrl.main.model.contentHubLink}}</a>
+            </div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Link to latest Media:</span>
+                <a href="{{ctrl.main.model.latestMediaLink}}" target="_blank">{{ctrl.main.model.latestMediaLink}}</a>
+            </div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Recent media coverage:</span> {{ctrl.main.model.mediaCoverage}}</div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Advocacy actions and achievements:</span> {{ctrl.main.model.advocacyActions}}</div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Spokespeople:</span> {{ctrl.main.model.spokespeople}}</div>
+        </div>
+    </div>
+
+    <div class="well">
+        <div layout-gt-md="row" layout-padding>
+            <h4>Emergency supply chain</h4>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Do you have prepositioned stock in country?: </span>{{ctrl.main.model.prepositionedStock}}</div>
+            <div>
+                <span class="bold">Are you planning to use it for this response?: </span>{{ctrl.main.model.forThisResponse}}</div>
+        </div>
+        <div layout-gt-md="row" layout-padding>
+            <div>
+                <span class="bold">Planned procurement on this response (in USD): </span>{{ctrl.main.model.plannedProcurement}}</div>
+            <div>
+                <span class="bold">Procurement spend to date (in USD): </span>{{ctrl.main.model.procurementSpend}}</div>
+        </div>
+    </div>
+
+        <div class="well">
+            <div layout-gt-md="row" layout-padding>
+                <h4>Gender & GBV Minimum Actions (For Internal Use Only)</h4>
+            </div>
+
+                            <div layout-gt-md="row" layout-padding>
+                                <div layout-gt-md="column" flex-gt-sm="40">
+                                    <span class="bold">All data is disaggregated by age and sex, and analysed regularly to identify who is included and excluded
+                                        from our programmes</span>
+                            
+                                </div>
+                                <div layout-gt-md="column" flex-gt-sm="10">
+                                    {{ctrl.main.model.dataIsDisaggregatedByAgeAndSex}}
+                                   
+                                </div>
+                                <div layout-gt-md="column" flex-gt-sm="40">
+                                    <span class="bold">All Technical Advisors are aware of, and consistently using, the (Humanitarian) Gender Equality Marker
+                                        in programme design. Please select which sectors.</span>
+                            
+                            
+                                </div>
+                                <div layout-gt-md="column" flex-gt-sm="10">
+                                    {{ctrl.main.model.advisorsAreAwareOfGenderEquality}}
+                                    
+                                </div>
+                            </div>
+                            <div layout-gt-md="row" layout-padding>
+                                <div layout-gt-md="column" flex-gt-sm="40">
+                                    <span class="bold">All consultation with communities is sex-segregated (conducted separately with girls, boys, women and
+                                        men).
+                                        If no, please explain the barriers faced.</span>
+                            
+                                </div>
+                                <div layout-gt-md="column" flex-gt-sm="10">
+                                    {{ctrl.main.model.consultationWithCommunitiesIsSex}}
+
+                                    
+                                </div>
+                            
+                                <div layout-gt-md="column" flex-gt-sm="40">
+                                    <span class="bold">All consultation with communities is conducted by a facilitator of the same sex as the participant(s).
+                                        If no, please explain the barriers faced.</span>
+                            
+                            
+                                </div>
+                                <div layout-gt-md="column" flex-gt-sm="10">
+                                    {{ctrl.main.model.facilitatorOfTheSameSexAsThePart}}
+                                    
+                                </div>
+                            </div>
+                            
+                            
+                            <div layout-gt-md="row" layout-padding>
+                                <div layout-gt-md="column" flex-gt-sm="40">
+                                    <span class="bold">A Safety Audit and Assessment is regularly (at least once each year) conducted to identify and mitigate
+                                        GBV risks. If
+                                        yes, please indicate frequency</span>
+                            
+                                </div>
+                                <div layout-gt-md="column" flex-gt-sm="10">
+                                    {{ctrl.main.model.safetyAuditAndAssessment}}
+                                    
+                                </div>
+                                <div layout-gt-md="column" flex-gt-sm="40">
+                                    <span class="bold">A Gender Analysis has been conducted for target areas and is informing programming. If no, please explain
+                                        the barriers
+                                        faced</span>
+                            
+                            
+                                </div>
+                                <div layout-gt-md="column" flex-gt-sm="10">
+                                    {{ctrl.main.model.genderAnalysis}}
+                                    
+                                </div>
+                            </div>
+                            
+                            <div layout-gt-md="row" layout-padding>
+                               
+                            
+                                <div layout-gt-md="column" flex-gt-sm="50">
+                                    <span class="bold">Girl-only safe spaces have been established (e.g Girls’ Clubs and Girl Friendly Spaces), informed by
+                                        consultation with
+                                        girls. If yes, please specify.</span>
+                            
+                            
+                                </div>
+
+
+                                <div layout-gt-md="column" flex-gt-sm="50">
+                                {{ctrl.main.model.girlOnlySafeSpaces}}
+                                </div>
+                            </div>
+                            
+                            <div layout-gt-md="row" layout-padding>
+                                <div layout-gt-md="column" flex-gt-sm="40">
+                                    <span class="bold">Dignity kits are regularly distributed to women and girls, informed by consultation with women and girls.
+                                        If yes, please
+                                        specify through which sector and the frequency.</span>
+                            
+                                </div>
+                                <div layout-gt-md="column" flex-gt-sm="10">
+                                    {{ctrl.main.model.dignityKitsAreRegularlyDistribut}}
+                                    
+                                </div>
+                            
+                                <div layout-gt-md="column" flex-gt-sm="40">
+                                    <span class="bold">Women & girls are equally and meaningfully represented in all community structures. For mixed-sex
+                                        community structures,
+                                        there is a 50:50 balance of females and males; for single-sex community structures, there is a female-only
+                                        and male-only
+                                        structure.</span>
+                            
+                                </div>
+                                <div layout-gt-md="column" flex-gt-sm="10">
+                                    {{ctrl.main.model.womenGirlsEquallyMeaningfullyRep}}
+                                  
+                                </div>
+                            </div>
+                            
+                            <div layout-gt-md="row" layout-padding>
+                                <div layout-gt-md="column" flex-gt-sm="40">
+                                    <span class="bold">Frontline staff are aware of inter-agency GBV referral pathways and how to receive disclosures and make
+                                        safe and ethical
+                                        referrals for GBV survivors. If yes, please specify which sector has received training.</span>
+                            
+                                </div>
+                                <div layout-gt-md="column" flex-gt-sm="10">
+                                    {{ctrl.main.model.frontlineStaffAreAwareOfGBV}}
+                            
+                                    
+                                </div>
+                                <div layout-gt-md="column" flex-gt-sm="40">
+                                    <span class="bold">All staff and communities are aware of the PSEA Policy and the reporting process. If yes, please list the
+                                        approaches for
+                                        communicating with communities.</span>
+                            
+                                </div>
+                                <div layout-gt-md="column" flex-gt-sm="10">
+                                    {{ctrl.main.model.staffCommunitiesAreAwareOfPSEAPo}}
+                                   
+                                </div>
+                            </div>
+                            
+                            <div layout-gt-md="row" layout-padding>
+                                <div layout-gt-md="column" flex-gt-sm="40">
+                                    <span class="bold">Are there targeted activities to protect and empower girls? If yes, please briefly list what these are,
+                                        eg Girl Friendly
+                                        Spaces.</span>
+                            
+                                </div>
+                                <div layout-gt-md="column" flex-gt-sm="10">
+                                    {{ctrl.main.model.targetedActivitiesToProtectEmpow}}
+                                   
+                                </div>
+                                <div layout-gt-md="column" flex-gt-sm="40">
+                                    <span class="bold">[Only Prioritised Responses] A response-wide Gender Action Plan has been developed and is being
+                                        implemented</span>
+                                
+                                </div>
+                                <div layout-gt-md="column" flex-gt-sm="10">
+                                    {{ctrl.main.model.responseWideGenderAction}}
+                                
+                                </div>
+                                
+                            </div>
+        </div>
+
+</md-content>

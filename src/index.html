@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <base href="#{HART.SharePoint.SiteUrl}/app">
+    <title>Welcome to HART</title>
+    <meta name="viewport" content="width=device-width">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href=#{HART.SharePoint.SiteUrl}/app/css/main.css?ver=#{Octopus.Release.Number}">
+</head>
+<body layout="column" md-no-ink>
+
+<loading id="loading"></loading>
+
+<toolbar md-theme="menu"></toolbar>
+
+<main id="sidenav-container" layout="row" flex>
+    <requests-floating-button></requests-floating-button>
+    <md-content layout="column" md-theme="menu">
+        <sidenav></sidenav>
+    </md-content>
+
+    <div layout="column" flex md-theme="pageTheme" class="app-container">
+        <app></app>
+    </div>
+</main>
+<footer></footer>
+    <script src="#{HART.SharePoint.SiteUrl}/app/js/appConfig.js?ver=#{Octopus.Release.Number}"></script>	
+    <script src="#{HART.SharePoint.SiteUrl}/app/js/shims.js?ver=#{Octopus.Release.Number}"></script>	
+    <script src="#{HART.SharePoint.SiteUrl}/app/js/core.js?ver=#{Octopus.Release.Number}"></script>
+</body>
+</html>
+
+<!-- changed  -->

@@ -1,0 +1,7 @@
+{
+    "prefix": "",
+    "metadataFieldName": "__metadata",
+    "groupsFieldName": "Groups",
+    "etagPropertyName": "etag",
+    "titlePropertyName": "title"
+}

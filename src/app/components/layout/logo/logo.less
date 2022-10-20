@@ -1,0 +1,39 @@
+logo {
+  span.toolbarLogo {
+    background: url("../img/icons/fullLogo.png") center center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    display: block;
+    width: 160px;
+    height: 38px;
+    margin-top: 7px;
+  }
+
+  span.toolbarLogoSmall{
+    background: url("../img/icons/smallLogo.png") center center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    display: block;
+    width: 36px;
+    height: 38px;
+    margin-top: 5px;
+  }
+
+  @media all and (min-width: 601px) {
+    .md-button.md-icon-button {
+      width: 162px;
+      border-radius: initial;
+      height: inherit;
+      border-radius: 0%;
+    }
+  }
+
+  @media all and (min-width: 0px) and (max-width: 600px) {
+    .md-button.md-icon-button {
+      width: 40px;
+      border-radius: initial;
+      height: inherit;
+      border-radius: 0%;
+    }
+  }
+}

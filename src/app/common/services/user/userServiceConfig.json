@@ -1,0 +1,7 @@
+{
+    "getCurrentUser": "/_api/web/currentuser/?$expand=groups",
+    "searchUsers": "/_api/web/siteusers",
+    "searchUsersInGroup": "/_api/web/sitegroups/getByName('{GROUP}')/Users",
+    "usersQueryIncludingOwn": "?$select=Id,Title,LoginName,Email&$filter=(substringof('{QUERY}',Title) eq true) or (substringof('{QUERY}',LoginName) eq true) or (substringof('{QUERY}',Email) eq true)",
+    "usersQuery": "?$select=Id,Title,LoginName,Email&$filter=(((substringof('{QUERY}',Title) eq true) or (substringof('{QUERY}',LoginName) eq true) or (substringof('{QUERY}',Email) eq true)) and Id ne {USER_ID})"
+}
